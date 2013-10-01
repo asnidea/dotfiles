@@ -213,6 +213,12 @@ if has("gui_running")
 	set guifontwide=Ubuntu\ Mono\ 14
 endif
 
+" gui font ...
+if has("win32")
+    set guifont=Courier_New:h14:cANSI
+    set guifontwide=YaHei\ Consolas\ Hybrid:h14
+endif
+
 " Default color scheme
 color desert
 
