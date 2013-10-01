@@ -46,7 +46,7 @@ Bundle 'vim-scripts/Color-Sampler-Pack'
 "ruby
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rails.git'
-Bundle 'taq/vim-rspec.git'
+"Bundle 'taq/vim-rspec.git' 失效
 " Langs
 Bundle 'pangloss/vim-javascript'
 Bundle 'tpope/vim-haml'
