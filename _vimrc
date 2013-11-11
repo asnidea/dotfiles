@@ -299,7 +299,7 @@ set foldenable
 set foldmethod=manual
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
-
+"-----------------------------------------------------------------
 " plugin - NERD_commenter.vim 注释代码用的
 " [count],cc 光标以下count行逐行添加注释(7,cc)
 " [count],cu 光标以下count行逐行取消注释(7,cu)
@@ -311,20 +311,25 @@ let NERDSpaceDelims=1       " 让注释符与语句之间留一个空格
 let NERDCompactSexyComs=1   " 多行注释时样子更好看
 
 " Command-/ to toggle comments
+" map <C-/> <plug>NERDComToggleComment<CR>
+" imap <C-/> <Esc><plug>NERDComToggleComment<CR>i
 map <C-/> <plug>NERDCommenterToggle<CR>
 imap <C-/> <Esc><plug>NERDCommenterToggle<CR>i
 
+"-----------------------------------------------------------------
 " CTags
 map <F12> :!ctags <CR> <CR> :!cscope -Rbq<CR><CR>
 set tags=tags; 
 "这个分号是不可以缺省的
 
+"-----------------------------------------------------------------
 " Tagbar
 " nnoremap <silent> <F7> :TagbarToggle<CR> 
 nmap <F8> :TagbarToggle<CR>
 " set focus to TagBar when opening it
 let g:tagbar_autofocus = 1
 
+"-----------------------------------------------------------------
 " 设置SuperTab 
 let g:SuperTabRetainCompletionType="context" 
 
@@ -337,7 +342,6 @@ set noequalalways
 
 "-----------------------------------------------------------------
 " Ctrlp
-
 
 " 设置忽略的文件和目录
 
