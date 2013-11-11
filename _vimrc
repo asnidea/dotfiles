@@ -1,13 +1,44 @@
-set nocompatible               " be iMproved
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+
 
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+ " 如果在windows下使用的话，设置为 
+ set rtp+=$HOME/.vim/bundle/vundle/
+ call vundle#rc()
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+ " let Vundle manage Vundle
+ " required! 
+ Bundle 'gmarik/vundle'
 
 " My Bundles here:
 
@@ -20,8 +51,11 @@ Bundle 'gmarik/vundle'
 " Bundle 'tpope/vim-rails.git'
 
 "snipmate
-Bundle 'gmarik/snipmate.vim'
-Bundle 'honza/snipmate-snippets'
+" Bundle 'gmarik/snipmate.vim'
+" Bundle 'honza/snipmate-snippets'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
+
 "git
 Bundle 'tpope/vim-fugitive'
 
@@ -30,23 +64,22 @@ Bundle 'ervandew/supertab'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'fholgado/minibufexpl.vim'
-Bundle 'Lokaltog/vim-easymotion'
+" vim-easymotion用全新的方式在文档中高效的移动光标
+Bundle 'Lokaltog/vim-easymotion'	
 Bundle 'jiangmiao/auto-pairs'
-Bundle 'tsaleh/vim-align'
+Bundle 'junegunn/vim-easy-align'
+
+
 
 "taglist
 Bundle 'majutsushi/tagbar'
 "nerd
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
-
-"color
-Bundle 'vim-scripts/Color-Sampler-Pack'
-
 "ruby
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rails.git'
-"Bundle 'taq/vim-rspec.git' 失效
+Bundle 'taq/vim-rspec.git'
 " Langs
 Bundle 'pangloss/vim-javascript'
 Bundle 'tpope/vim-haml'
@@ -57,6 +90,7 @@ Bundle 'cakebaker/scss-syntax.vim'
 Bundle 'skammer/vim-css-color'
 Bundle 'mmalecki/vim-node.js'
 Bundle 'hallison/vim-markdown'
+Bundle 'tangledhelix/vim-octopress'
 
 " Bundle 'wincent/command-t'
 
@@ -104,10 +138,20 @@ filetype plugin indent on     " required!
 
 " 设置文件编码检测类型及支持格式 
 set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
-
+"set encoding=utf-8
 set fileencodings=utf-8,GB2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
-
+"字体设置-雅黑
+"set guifont=YaHei\ Consolas\ Hybrid\ 常规:h12
+"set guifont=YaHei\ Consolas\ Hybrid:h12
+"set guifont=YaHei\ Consolas\ Hybrid:h14
+"if has("gui_running") "如果在 GUI 环境下运行则设置下面语句 
+"    "set guifont=YaHei\ Consolas\ Hybrid\ 常规:h16
+"	set guifont=YaHei/ Consolas/ Hybrid:h12
+"endif 
+if has("gui_running") "如果在 GUI 环境下运行则设置下面语句 
+	set guifont=YaHei_Consolas_Hybrid:h14 
+endif 
 	
 
 " 设置开启语法高亮  
@@ -191,9 +235,6 @@ set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
 "\   exe "normal! g`\"" |
 "\ endif
 
-
-
-
 "高亮鼠标位置
    if has("gui_running")  
        "cursorline  highlight(高亮当前行)
@@ -209,14 +250,6 @@ set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
 if has("gui_running")
     autocmd InsertLeave * se nocul
     autocmd InsertEnter * se cul
-	set gfn=Ubuntu\ Mono\ 14
-	set guifontwide=Ubuntu\ Mono\ 14
-endif
-
-" gui font ...
-if has("win32")
-    set guifont=Courier_New:h14:cANSI
-    set guifontwide=YaHei\ Consolas\ Hybrid:h14
 endif
 
 " Default color scheme
@@ -302,5 +335,16 @@ let g:SuperTabRetainCompletionType="context"
 set noequalalways
 
 
+"-----------------------------------------------------------------
+" Ctrlp
 
 
+" 设置忽略的文件和目录
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|log|jpg|png|jpeg)$',
+  \ }
