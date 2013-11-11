@@ -51,9 +51,8 @@ filetype off                   " required!
 " Bundle 'tpope/vim-rails.git'
 
 "snipmate
-" Bundle 'gmarik/snipmate.vim'
-" Bundle 'honza/snipmate-snippets'
-Bundle 'SirVer/ultisnips'
+" Bundle 'SirVer/ultisnips'
+Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 
 "git
@@ -133,7 +132,35 @@ Bundle 'tangledhelix/vim-octopress'
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
  
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                按键设定                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 如果前面有behave mswin，则以下3项可以忽略
+" 把 CTRL-S 映射为保存 
+"imap <C-S> <C-C>:w<CR>  
 
+"ctr+c
+"vnoremap <C-C> "+y
+
+"ctr+v
+"inoremap <C-V> <ESC>"+gPi
+
+"把esc映射为jj
+inoremap jj <ESC>
+
+"把leaderkey改为，按起来更方便
+let mapleader=","
+
+" 修改vimrc配置文件
+nmap <leader>vc :tabedit $MYVIMRC<CR>
+nmap <leader>ss :edit $MYVIMRC<CR>
+ 
+" 配置文件
+autocmd bufwritepost _vimrc source $MYVIMRC
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                常用设定                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on     " required! 
 
 " 设置文件编码检测类型及支持格式 
@@ -142,13 +169,8 @@ set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 set fileencodings=utf-8,GB2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
 "字体设置-雅黑
-"set guifont=YaHei\ Consolas\ Hybrid\ 常规:h12
-"set guifont=YaHei\ Consolas\ Hybrid:h12
-"set guifont=YaHei\ Consolas\ Hybrid:h14
+
 "if has("gui_running") "如果在 GUI 环境下运行则设置下面语句 
-"    "set guifont=YaHei\ Consolas\ Hybrid\ 常规:h16
-"	set guifont=YaHei/ Consolas/ Hybrid:h12
-"endif 
 if has("gui_running") "如果在 GUI 环境下运行则设置下面语句 
 	set guifont=YaHei_Consolas_Hybrid:h14 
 endif 
@@ -255,24 +277,6 @@ endif
 " Default color scheme
 color desert
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                按键设定                                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 如果前面有behave mswin，则以下3项可以忽略
-" 把 CTRL-S 映射为保存 
-"imap <C-S> <C-C>:w<CR>  
-
-"ctr+c
-"vnoremap <C-C> "+y
-
-"ctr+v
-"inoremap <C-V> <ESC>"+gPi
-
-"把esc映射为jj
-inoremap jj <ESC>
-
-"把leaderkey改为，按起来更方便
-let mapleader=","
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                插件设定                                    "
@@ -313,8 +317,10 @@ let NERDCompactSexyComs=1   " 多行注释时样子更好看
 " Command-/ to toggle comments
 " map <C-/> <plug>NERDComToggleComment<CR>
 " imap <C-/> <Esc><plug>NERDComToggleComment<CR>i
-map <C-/> <plug>NERDCommenterToggle<CR>
-imap <C-/> <Esc><plug>NERDCommenterToggle<CR>i
+
+map <leader>/ <plug>NERDCommenterToggle
+map <C-/> <plug>NERDCommenterToggle
+imap <C-/> <Esc><plug>NERDCommenterToggle i
 
 "-----------------------------------------------------------------
 " CTags
