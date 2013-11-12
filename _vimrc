@@ -187,6 +187,17 @@ set cindent shiftwidth=4
 set autoindent shiftwidth=4  
 set smarttab
 
+" filetype tab
+autocmd FileType make     set noexpandtab
+autocmd FileType python   set noexpandtab
+autocmd FileType css,scss set tabstop=2 shiftwidth=2
+autocmd FileType eruby  set tabstop=2 shiftwidth=2
+autocmd FileType ruby,rdoc set tabstop=2 shiftwidth=2
+autocmd FileType html set tabstop=2 shiftwidth=2
+autocmd FileType javascript set tabstop=2 shiftwidth=2
+autocmd FileType coffee set tabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.json set filetype=json
+autocmd BufRead,BufNewFile *.slim set filetype=slim
 
 "不生成备份文件
 set noswapfile
@@ -363,6 +374,5 @@ function! MyDiff()
   endif
   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
 endfunction
-
 
 
