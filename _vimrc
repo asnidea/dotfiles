@@ -3,16 +3,18 @@ source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
 
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-                
-
  " 如果在windows下使用的话，设置为 
  set rtp+=$HOME/.vim/bundle/vundle/
  call vundle#rc()
 
+" Windows
+" if has('win32') || has('win64')
+    " set shellslash
+" endif
 
+" 不设置的话会报错“ fatal: could not create leading directories”
+set noshellslash
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Vundle                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -32,8 +34,11 @@ behave mswin
 
 " snipmate
 " Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
 Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+
 
 " git
 Bundle 'tpope/vim-fugitive'
@@ -47,6 +52,7 @@ Bundle 'fholgado/minibufexpl.vim'
 Bundle 'Lokaltog/vim-easymotion'	
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'junegunn/vim-easy-align'
+Bundle 'nathanaelkane/vim-indent-guides'
 
 "taglist
 Bundle 'majutsushi/tagbar'
@@ -196,6 +202,8 @@ set hlsearch
 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
 set report=0
 
+set clipboard=unnamed
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                显示设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -283,8 +291,8 @@ let NERDCompactSexyComs=1   " 多行注释时样子更好看
 " imap <C-/> <Esc><plug>NERDComToggleComment<CR>i
 
 map <leader>/ <plug>NERDCommenterToggle
-map <C-/> <plug>NERDCommenterToggle
-imap <C-/> <Esc><plug>NERDCommenterToggle i
+map <M-/> <plug>NERDCommenterToggle
+imap <M-/> <Esc><plug>NERDCommenterToggle i
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTags
@@ -313,6 +321,7 @@ set noequalalways
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrlp
 
+let g:ctrlp_map = ',,'
 " 设置忽略的文件和目录
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
@@ -325,12 +334,13 @@ let g:ctrlp_custom_ignore = {
 
 
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Function                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set diffexpr=MyDiff()
-function MyDiff()
+"请注意在每个“function”之后都用了一个“!”（“:help E122”）：这也是为了方便调试
+"让“source ~/.vimrc”能正确运行而不会报告函数已定义的错误。
+function! MyDiff()
   let opt = '-a --binary '
   if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
   if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
@@ -353,3 +363,6 @@ function MyDiff()
   endif
   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
 endfunction
+
+
+
