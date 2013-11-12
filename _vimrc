@@ -3,38 +3,19 @@ source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
 
-set diffexpr=MyDiff()
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  let eq = ''
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      let cmd = '""' . $VIMRUNTIME . '\diff"'
-      let eq = '"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-endfunction
 
 
-
-filetype off                   " required!
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+                
 
  " 如果在windows下使用的话，设置为 
  set rtp+=$HOME/.vim/bundle/vundle/
  call vundle#rc()
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Vundle                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
  " let Vundle manage Vundle
  " required! 
@@ -46,16 +27,15 @@ filetype off                   " required!
 " original repos on github
 " github上的用户写的插件，使用这种用户名+repo名称的方式
 " Bundle 'tpope/vim-fugitive'
-" Bundle 'Lokaltog/vim-easymotion'
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Bundle 'tpope/vim-rails.git'
 
-"snipmate
+" snipmate
 " Bundle 'SirVer/ultisnips'
-Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
+Bundle 'garbas/vim-snipmate'
 
-"git
+" git
 Bundle 'tpope/vim-fugitive'
 
 Bundle 'vim-scripts/ZoomWin'
@@ -67,8 +47,6 @@ Bundle 'fholgado/minibufexpl.vim'
 Bundle 'Lokaltog/vim-easymotion'	
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'junegunn/vim-easy-align'
-
-
 
 "taglist
 Bundle 'majutsushi/tagbar'
@@ -91,28 +69,12 @@ Bundle 'mmalecki/vim-node.js'
 Bundle 'hallison/vim-markdown'
 Bundle 'tangledhelix/vim-octopress'
 
-" Bundle 'wincent/command-t'
-
-
 " vim-scripts repos
 " vimscripts的repo使用下面的格式，直接是插件名称
 
 " Bundle 'taglist.vim'
 " Bundle 'surround.vim'
 " Bundle 'ack.vim'
-" Bundle 'SuperTab'
-" Bundle 'vimwiki'
-" Bundle 'winmanager'
-" Bundle 'bufexplorer.zip'
-" Bundle 'The-NERD-tree'
-" Bundle 'matrix.vim--Yang'
-" Bundle 'FencView.vim'
-" Bundle 'Conque-Shell'
-" Bundle 'Vimpress'
-" Bundle 'Markdown'
-" Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
-" Bundle 'c.vim'
-" Bundle 'snipMate'
 
 " non github reposo
 " 非github的插件，可以直接使用其git地址
@@ -153,7 +115,7 @@ let mapleader=","
 
 " 修改vimrc配置文件
 nmap <leader>vc :tabedit $MYVIMRC<CR>
-nmap <leader>ss :edit $MYVIMRC<CR>
+nmap <leader>e :edit $MYVIMRC<CR>
  
 " 配置文件
 autocmd bufwritepost _vimrc source $MYVIMRC
@@ -161,7 +123,10 @@ autocmd bufwritepost _vimrc source $MYVIMRC
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                常用设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype plugin indent on     " required! 
+" required!
+filetype off   
+ " required! 
+filetype plugin indent on    
 
 " 设置文件编码检测类型及支持格式 
 set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
@@ -179,8 +144,6 @@ endif
 " 设置开启语法高亮  
 syntax on  
 
-"显示行号  
-set number
 
 " 查找设置 
 set hlsearch 	"搜索高亮high light search
@@ -216,14 +179,14 @@ set viminfo+=!
 set tabstop=4  
 set cindent shiftwidth=4  
 set autoindent shiftwidth=4  
-filetype plugin indent on  " load the plugin and indent settings for the detected filetype
-
+set smarttab
 
 
 "不生成备份文件
 set noswapfile
 
-"set number
+"显示行号  
+set number
 set nospell
 set linebreak
 set showbreak=...
@@ -257,22 +220,23 @@ set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
 "\   exe "normal! g`\"" |
 "\ endif
 
-"高亮鼠标位置
-   if has("gui_running")  
-       "cursorline  highlight(高亮当前行)
-       set cursorline               
-       hi CursorLine guibg=#666666 
-       hi CursorColumn guibg=#333333 
-       "cursorcolumn highlight(高亮当前列)          
-       "set cursorcolumn
-       "highlight CursorLine cterm=none ctermbg=2 ctermfg=0
-   endif 
 
-" 用浅色高亮当前行
-if has("gui_running")
+
+if has("gui_running")  
+	"" 高亮鼠标位置
+	"cursorline  highlight(高亮当前行)
+	set cursorline               
+	hi CursorLine guibg=#666666 
+	hi CursorColumn guibg=#333333 
+	"cursorcolumn highlight(高亮当前列)          
+    "set cursorcolumn
+    "highlight CursorLine cterm=none ctermbg=2 ctermfg=0
+
+	" 用浅色高亮当前行
     autocmd InsertLeave * se nocul
     autocmd InsertEnter * se cul
-endif
+endif 
+
 
 " Default color scheme
 color desert
@@ -303,14 +267,14 @@ set foldenable
 set foldmethod=manual
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
-"-----------------------------------------------------------------
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin - NERD_commenter.vim 注释代码用的
 " [count],cc 光标以下count行逐行添加注释(7,cc)
 " [count],cu 光标以下count行逐行取消注释(7,cu)
 " [count],cm 光标以下count行尝试添加块注释(7,cm)
 " ,cA 在行尾插入 /* */,并且进入插入模式。 这个命令方便写注释
 " 注：count参数可选，无则默认为选中行或当前行
-"-----------------------------------------------------------------
+
 let NERDSpaceDelims=1       " 让注释符与语句之间留一个空格
 let NERDCompactSexyComs=1   " 多行注释时样子更好看
 
@@ -322,20 +286,20 @@ map <leader>/ <plug>NERDCommenterToggle
 map <C-/> <plug>NERDCommenterToggle
 imap <C-/> <Esc><plug>NERDCommenterToggle i
 
-"-----------------------------------------------------------------
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTags
 map <F12> :!ctags <CR> <CR> :!cscope -Rbq<CR><CR>
 set tags=tags; 
 "这个分号是不可以缺省的
 
-"-----------------------------------------------------------------
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar
 " nnoremap <silent> <F7> :TagbarToggle<CR> 
 nmap <F8> :TagbarToggle<CR>
 " set focus to TagBar when opening it
 let g:tagbar_autofocus = 1
 
-"-----------------------------------------------------------------
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 设置SuperTab 
 let g:SuperTabRetainCompletionType="context" 
 
@@ -346,7 +310,7 @@ let g:SuperTabRetainCompletionType="context"
 set noequalalways
 
 
-"-----------------------------------------------------------------
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrlp
 
 " 设置忽略的文件和目录
@@ -358,3 +322,34 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|log|jpg|png|jpeg)$',
   \ }
+
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Function                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
