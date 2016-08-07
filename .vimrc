@@ -1,107 +1,135 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set the runtime path to include Vundle and initialize
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Vundle设定                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置包括vundle和初始化相关的runtime path
 set rtp+=~/.vim/bundle/Vundle.vim
+
+" 插件必须在vundle#begin和vundle#end之间
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
+" 另一种选择, 指定一个vundle安装插件的路径
 "call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
+" 让vundle管理插件版本,必须
 Plugin 'VundleVim/Vundle.vim'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-" original repos on github
-" github上的用户写的插件，使用这种用户名+repo名称的方式
+" 以下范例用来支持不同格式的插件安装.
+" 请将安装插的命令放在vundle#begin和vundle#end之间.
+" Github上的插件
+" 格式为 Plugin '用户名/插件仓库名'
+" Plugin 'tpope/vim-fugitive'
+" 来自 http://vim-scripts.org/vim/scripts.html 的插件
+" Plugin '插件名称' 实际上是 Plugin 'vim-scripts/插件仓库名' 只是此处的用户名可以省略
+" Plugin 'L9'
+" 由Git支持但不再github上的插件仓库 Plugin 'git clone 后面的地址'
+" Plugin 'git://git.wincent.com/command-t.git'
+" 本地的Git仓库(例如自己的插件) Plugin 'file:///+本地插件仓库绝对路径'
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" 插件在仓库的子目录中.
+" 正确指定路径用以设置runtimepath. 以下范例插件在sparkup/vim目录下
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" 安装L9，如果已经安装过这个插件，可利用以下格式避免命名冲突
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+" vim-scripts repos
+" vimscripts的repo使用下面的格式，直接是插件名称
+
+
+" My Plugins here:
+
+" 补全
+Plugin 'ervandew/supertab'
+"文件跳转:  Ctrl + p 快捷键
+Plugin 'kien/ctrlp.vim'
+"文件跳转
+Plugin 'Lokaltog/vim-easymotion'
+" 切换缓冲区
+Plugin 'fholgado/minibufexpl.vim'
+" 对齐
+Plugin 'tsaleh/vim-align'
+" Ag：跨文件代码查找
+"Plugin 'mileszs/ack.vim'  用Ag取代ack
+Plugin 'rking/ag.vim'
+" 状态行
+Plugin 'bling/vim-airline'
+"用于快速切换括号/引号或者标签
+Plugin 'tpope/vim-surround'
+"在Vim 中对齐文本
+Plugin 'godlygeek/tabular'
+" 符号自动补全
+Plugin 'raimondi/delimitmate'
+" 缩进提示线
+Plugin 'yggdroot/indentline'
+" repeat.vim: enable repeating supported plugin maps with "."
+Plugin 'tpope/vim-repeat'
+
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'vim-scripts/ZoomWin'
+
+" git
+Plugin 'tpope/vim-fugitive'
 
 "snipmate
 Plugin 'gmarik/snipmate.vim'
 Plugin 'honza/vim-snippets'
-"git
-Plugin 'tpope/vim-fugitive'
-
-Plugin 'vim-scripts/ZoomWin'
-Plugin 'ervandew/supertab'
-Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'tsaleh/vim-align'
 
 "taglist
 Plugin 'majutsushi/tagbar'
 "nerd
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
+
 "color
 Plugin 'vim-scripts/Color-Sampler-Pack'
 
-"ruby
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails.git'
-" Plugin 'taq/vim-rspec.git'
+
 " Langs
-" Plugin 'pangloss/vim-javascript'
+" 神级插件，ZenCoding(原名)可以让你以一种神奇而无比爽快的感觉写HTML、CSS
+Plugin 'mattn/emmet-vim'
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'leshill/vim-json'
+Plugin 'skammer/vim-css-color'
+Plugin 'hallison/vim-markdown'
+
 " Plugin 'tpope/vim-haml'
 " Plugin 'kchmck/vim-coffee-script'
 " Plugin 'itspriddle/vim-jquery'
-" Plugin 'leshill/vim-json'
 " Plugin 'cakebaker/scss-syntax.vim'
-" Plugin 'skammer/vim-css-color'
 " Plugin 'mmalecki/vim-node.js'
-" Plugin 'hallison/vim-markdown'
-" Plugin 'wincent/command-t'
 
-" plugin from http://vim-scripts.org/vim/scripts.html
-" vimscripts的repo使用下面的格式，直接是插件名称
-" Plugin 'L9'
+" ruby
+" Plugin 'vim-ruby/vim-ruby'
+" Plugin 'tpope/vim-rails.git'
+" Plugin 'taq/vim-rspec.git'
 
-
-" Git plugin not hosted on GitHub
-" 非github的插件，可以直接使用其git地址
-" Plugin 'git://git.wincent.com/command-t.git'
+" Plugin 'tomtom/tcomment_vim'
 
 
-" git repos on your local machine (i.e. when working on your own plugin)
-" 本机的插件，可以直接指向其路径
-" Plugin 'file:///home/gmarik/path/to/plugin'
-
-
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-Plugin 'ascenator/L9', {'name': 'newL9'}
-
-
-" ...
+" 你的所有插件需要在下面这行之前
+" Vundle#End
+call vundle#end()            " 必须
+filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和文件类型相关脚本
+" 忽视插件改变缩进,可以使用以下替代:
+"filetype plugin on
 "
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" 简要帮助文档
+" :PluginList       - 列出所有已配置的插件
+" :PluginInstall    - 安装插件,追加 `!` 用以更新或使用 :PluginUpdate
+" :PluginSearch foo - 搜索 foo ; 追加 `!` 清除本地缓存
+" :PluginClean      - 清除未使用插件,需要确认; 追加 `!` 自动批准移除未使用插件
 "
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line"
-" vundle主要就是上面这个四个命令，例如PluginInstall是全部重新安装，PluginInstall!则是更新
-" 一般安装插件的流程为，先PluginSearch一个插件，然后在列表中选中，按i安装
-" 安装完之后，在vimrc中，添加Plugin 'XXX'，使得bundle能够加载，这个插件，同时如果
-" 需要配置这个插件，也是在vimrc中设置即可
-" see :h vundle for more details or wiki for FAQ
-call vundle#end()
-filetype plugin indent on     " required! 
-"""""""""""""""""""""""""""""""""""""""""""""""""""
+" 查阅 :h vundle 获取更多细节和wiki以及FAQ
+" 将你自己对非插件片段放在这行之后
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  通用设定                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " 设置文件编码检测类型及支持格式 
 set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
-
 set fileencodings=utf-8,GB2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
 " 设置开启语法高亮  
@@ -109,6 +137,11 @@ syntax on
 
 "显示行号  
 set number
+
+" tab宽度  
+set tabstop=4  
+set cindent shiftwidth=4  
+set autoindent shiftwidth=4 
 
 " 查找设置 
 set hlsearch 	"搜索高亮high light search
@@ -130,47 +163,52 @@ set confirm
 " 带有如下符号的单词不要被换行分割
 set iskeyword+=_,$,@,%,#,-
 
+" vim 自身命令行模式智能补全
+set wildmenu
 
 " 设定文件浏览器目录为当前目录  
 set bsdir=buffer 
 
+" 通过使用: commands命令，告诉我们文件的哪一行被改变过
+set report=0
+
 " 保存全局变量
 set viminfo+=!
 
-" tab宽度  
-set tabstop=4  
-set cindent shiftwidth=4  
-set autoindent shiftwidth=4  
-filetype plugin indent on  " load the plugin and indent settings for the detected filetype
-
 "不生成备份文件
 set noswapfile
+set nobackup
+set nowb
 
 set nospell
 set linebreak
 set showbreak=...
-set nowrap
+
+
 
 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
 set report=0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                显示设定                                    "
+"                                  显示设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 总是显示状态行
-set laststatus=2
-" 我的状态行显示的内容（包括文件类型和解码）
-set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
 
-""我的状态行显示的内容（包括文件类型和解码）
-"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
-""状态栏设置:文件路径、文件名、标记、文件类型、字符编码、文件格式、当前位置、当前相对位置、文件总行数、日期、星期
-""set statusline=%F\ %h%1*%m%r%w%0*[%{strlen(&filetype)?&filetype:'none'},%{&encoding},%{&fileformat}]%=%-14.(%l,%c%V%)\ %<%p%%\ \ \ [%L]\ \ \ "%{strftime('%y-%m-%d\ %A')} 
+""""" 状态行设置
+" " 总是显示状态行
+" set laststatus=2
+" " 我的状态行显示的内容（包括文件类型和解码）
+" set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
+" 
+" ""我的状态行显示的内容（包括文件类型和解码）
+" "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+" ""状态栏设置:文件路径、文件名、标记、文件类型、字符编码、文件格式、当前位置、当前相对位置、文件总行数、日期、星期
+" ""set statusline=%F\ %h%1*%m%r%w%0*[%{strlen(&filetype)?&filetype:'none'},%{&encoding},%{&fileformat}]%=%-14.(%l,%c%V%)\ %<%p%%\ \ \ [%L]\ \ \ "%{strftime('%y-%m-%d\ %A')} 
+" 
 
 
-"在编辑过程中，在右下角显示光标位置的状态行
-    set ruler   
-    set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
+" "在编辑过程中，在右下角显示光标位置的状态行
+set ruler   
+" set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
 
 " 打开文件时，总是跳到退出之前的光标处
 "autocmd BufReadPost *
@@ -178,46 +216,55 @@ set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
 "\   exe "normal! g`\"" |
 "\ endif
 
+
 "高亮鼠标位置
-   if has("gui_running")  
-       "cursorline  highlight(高亮当前行)
-       set cursorline               
-       hi CursorLine guibg=#666666 
-       hi CursorColumn guibg=#333333 
-       "cursorcolumn highlight(高亮当前列)          
-       "set cursorcolumn
-       "highlight CursorLine cterm=none ctermbg=2 ctermfg=0
-   endif 
+if has("gui_running")  
+"cursorline  highlight(高亮当前行)
+set cursorline               
+hi CursorLine guibg=#666666 
+hi CursorColumn guibg=#333333 
+"cursorcolumn highlight(高亮当前列)          
+"set cursorcolumn
+"highlight CursorLine cterm=none ctermbg=2 ctermfg=0
+endif 
 
 " 用浅色高亮当前行
 if has("gui_running")
-    autocmd InsertLeave * se nocul
-    autocmd InsertEnter * se cul
-	set gfn=Ubuntu\ Mono\ 14
-	set guifontwide=Ubuntu\ Mono\ 14
+autocmd InsertLeave * se nocul
+autocmd InsertEnter * se cul
+set gfn=Ubuntu\ Mono\ 14
+set guifontwide=Ubuntu\ Mono\ 14
 endif
 
 " Default color scheme
 color desert
 
+set guifont=YaHeiConsolasHybrid\ 14
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                按键设定                                    "
+"                                  按键设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 把esc映射为jj
+inoremap jj <ESC>
+
+" 把leaderkey改为，
+let mapleader=","
+
 " 如果前面有behave mswin，则以下3项可以忽略
 " 把 CTRL-S 映射为保存 
 "imap <C-S> <C-C>:w<CR>  
-
 "ctr+c
 "vnoremap <C-C> "+y
-
 "ctr+v
 "inoremap <C-V> <ESC>"+gPi
 
-"把esc映射为jj
-inoremap jj <ESC>
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至vim
+nmap <Leader>p "+p
 
-"把leaderkey改为，按起来更方便
-let mapleader=","
+" 通过":W"命令来强制保存只读文件
+command W :w !sudo tee %
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                插件设定                                    "
@@ -279,6 +326,9 @@ let g:SuperTabRetainCompletionType="context"
 " This is likely a bludgeon to solve some other issue, but it works
 set noequalalways
 
+
+" Ag
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 
 
