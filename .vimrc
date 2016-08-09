@@ -264,7 +264,7 @@ vnoremap <Leader>y "+y
 nmap <Leader>p "+p
 
 " 通过":W"命令来强制保存只读文件
-command W :w !sudo tee %
+" command W :w !sudo tee %
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                插件设定                                    "
