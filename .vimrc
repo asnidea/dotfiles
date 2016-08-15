@@ -239,7 +239,7 @@ endif
 " Default color scheme
 color desert
 
-set guifont=YaHeiConsolasHybrid\ 14
+set guifontwide=Ubuntu\ Mono\ 14
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  按键设定                                    "
