@@ -37,24 +37,21 @@ Plugin 'VundleVim/Vundle.vim'
 " vimscripts的repo使用下面的格式，直接是插件名称
 
 
-" My Plugins here:
+" Plugins 列表:
 
 " 补全
 Plugin 'ervandew/supertab'
 "文件跳转:  Ctrl + p 快捷键
 Plugin 'kien/ctrlp.vim'
 "文件跳转: ,,w or ,,b
-Plugin 'Lokaltog/vim-easymotion'
+Plugin 'easymotion/vim-easymotion'
 " 切换缓冲区
 Plugin 'fholgado/minibufexpl.vim'
-" 对齐
-Plugin 'tsaleh/vim-align'
 " Ag：跨文件代码查找
-"Plugin 'mileszs/ack.vim'  用Ag取代ack
-Plugin 'rking/ag.vim'
+"Plugin 'mileszs/ack.vim'  
+Plugin 'rking/ag.vim'  "用Ag取代ack
 " 状态行
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'bling/vim-airline'
 "用于快速切换括号/引号或者标签
 Plugin 'tpope/vim-surround'
 "在Vim 中对齐文本
@@ -72,9 +69,9 @@ Plugin 'vim-scripts/ZoomWin'
 " git
 Plugin 'tpope/vim-fugitive'
 
-"snipmate
-Plugin 'gmarik/snipmate.vim'
+"snippet
 Plugin 'honza/vim-snippets'
+" Plugin 'gmarik/snipmate.vim'
 
 "taglist
 Plugin 'majutsushi/tagbar'
@@ -83,8 +80,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 
 "color
-Plugin 'vim-scripts/Color-Sampler-Pack'
-
+Plugin 'flazz/vim-colorschemes'
 
 " Langs
 " 神级插件，ZenCoding(原名)可以让你以一种神奇而无比爽快的感觉写HTML、CSS
@@ -100,6 +96,7 @@ Plugin 'hallison/vim-markdown'
 " Plugin 'itspriddle/vim-jquery'
 " Plugin 'cakebaker/scss-syntax.vim'
 " Plugin 'mmalecki/vim-node.js'
+
 
 " ruby
 " Plugin 'vim-ruby/vim-ruby'
