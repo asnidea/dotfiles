@@ -43,7 +43,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'ervandew/supertab'
 "文件跳转:  Ctrl + p 快捷键
 Plugin 'kien/ctrlp.vim'
-"文件跳转
+"文件跳转: ,,w or ,,b
 Plugin 'Lokaltog/vim-easymotion'
 " 切换缓冲区
 Plugin 'fholgado/minibufexpl.vim'
@@ -53,7 +53,8 @@ Plugin 'tsaleh/vim-align'
 "Plugin 'mileszs/ack.vim'  用Ag取代ack
 Plugin 'rking/ag.vim'
 " 状态行
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 "用于快速切换括号/引号或者标签
 Plugin 'tpope/vim-surround'
 "在Vim 中对齐文本
@@ -129,8 +130,10 @@ filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " 设置文件编码检测类型及支持格式 
-set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
-set fileencodings=utf-8,GB2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+" set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+" set fileencodings=utf-8,GB2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fencs=utf-8,gb18030,gbk,gb2312,cp936
+set fileencodings=utf-8,GB2312,cp936,gb18030,big5,latin1
 
 " 设置开启语法高亮  
 syntax on  
@@ -237,39 +240,16 @@ set guifontwide=Ubuntu\ Mono\ 14
 endif
 
 " Default color scheme
-color desert
+" color desert
+color molokai
 
 set guifontwide=Ubuntu\ Mono\ 14
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                  按键设定                                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 把esc映射为jj
-inoremap jj <ESC>
-
-" 把leaderkey改为，
-let mapleader=","
-
-" 如果前面有behave mswin，则以下3项可以忽略
-" 把 CTRL-S 映射为保存 
-"imap <C-S> <C-C>:w<CR>  
-"ctr+c
-"vnoremap <C-C> "+y
-"ctr+v
-"inoremap <C-V> <ESC>"+gPi
-
-" 设置快捷键将选中文本块复制至系统剪贴板
-vnoremap <Leader>y "+y
-" 设置快捷键将系统剪贴板内容粘贴至vim
-nmap <Leader>p "+p
-
-" 通过":W"命令来强制保存只读文件
-" command W :w !sudo tee %
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                插件设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin - NERD_tree.vim 以树状方式浏览系统中的文件和目录
+"-----------------------------------------------------------------
 " :NERDtree 打开NERD_tree         :NERDtreeClose    关闭NERD_tree
 " o 打开关闭文件或者目录         t 在标签页中打开
 " T 在后台标签页中打开           ! 执行此文件
@@ -291,36 +271,67 @@ set foldenable
 set foldmethod=manual
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
-
 " plugin - NERD_commenter.vim 注释代码用的
+"-----------------------------------------------------------------
 " [count],cc 光标以下count行逐行添加注释(7,cc)
 " [count],cu 光标以下count行逐行取消注释(7,cu)
 " [count],cm 光标以下count行尝试添加块注释(7,cm)
 " ,cA 在行尾插入 /* */,并且进入插入模式。 这个命令方便写注释
 " 注：count参数可选，无则默认为选中行或当前行
-"-----------------------------------------------------------------
 let NERDSpaceDelims=1       " 让注释符与语句之间留一个空格
 let NERDCompactSexyComs=1   " 多行注释时样子更好看
 
 " Command-/ to toggle comments
+"-----------------------------------------------------------------
 map <C-/> <plug>NERDCommenterToggle<CR>
 imap <C-/> <Esc><plug>NERDCommenterToggle<CR>i
 
+
 " CTags
+"-----------------------------------------------------------------
 map <F12> :!ctags <CR> <CR> :!cscope -Rbq<CR><CR>
 set tags=tags; 
 "这个分号是不可以缺省的
 
 " Tagbar
+"-----------------------------------------------------------------
 " nnoremap <silent> <F7> :TagbarToggle<CR> 
 nmap <F8> :TagbarToggle<CR>
 " set focus to TagBar when opening it
 let g:tagbar_autofocus = 1
 
 " 设置SuperTab 
+"-----------------------------------------------------------------
 let g:SuperTabRetainCompletionType="context" 
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 
+" 设置vim-airline
+"-----------------------------------------------------------------
+let g:airline_theme="molokai" 
+
+"这个是安装字体后 必须设置此项" 
+let g:airline_powerline_fonts = 1   
+
+" 打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+"设置切换Buffer快捷键"
+nnoremap <C-tab> :bn<CR>
+nnoremap <C-s-tab> :bp<CR>
+" 关闭状态显示空白符号计数
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+" 设置consolas字体"前面已经设置过
+"set guifont=Consolas\ for\ Powerline\ FixedD:h11
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+
+
+" ZoomWin
+"-----------------------------------------------------------------
 " Without setting this, ZoomWin restores windows in a way that causes
 " equalalways behavior to be triggered the next time CommandT is used.
 " This is likely a bludgeon to solve some other issue, but it works
@@ -328,7 +339,5 @@ set noequalalways
 
 
 " Ag
+"-----------------------------------------------------------------
 let g:ackprg = 'ag --nogroup --nocolor --column'
-
-
-
