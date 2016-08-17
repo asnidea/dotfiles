@@ -52,6 +52,7 @@ Plugin 'fholgado/minibufexpl.vim'
 Plugin 'rking/ag.vim'  "用Ag取代ack
 " 状态行
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 "用于快速切换括号/引号或者标签
 Plugin 'tpope/vim-surround'
 "在Vim 中对齐文本
@@ -243,6 +244,23 @@ color molokai
 set guifontwide=Ubuntu\ Mono\ 14
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  按键设定                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 把esc映射为jj
+inoremap jj <ESC>
+
+" 把leaderkey改为，
+let mapleader=","
+
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至vim
+nmap <Leader>p "+p
+
+" 通过":W"命令来强制保存只读文件
+" command W :w !sudo tee %
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                插件设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin - NERD_tree.vim 以树状方式浏览系统中的文件和目录
@@ -305,13 +323,22 @@ let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " 设置vim-airline
 "-----------------------------------------------------------------
+" set status line
+set laststatus=2
+
 let g:airline_theme="molokai" 
 
 "这个是安装字体后 必须设置此项" 
 let g:airline_powerline_fonts = 1   
 
 " 打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
+" enable tabline
 let g:airline#extensions#tabline#enabled = 1
+" set left separator
+let g:airline#extensions#tabline#left_sep = ' '
+" set left separator which are not editting
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" show buffer number
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 "设置切换Buffer快捷键"
