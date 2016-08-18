@@ -99,6 +99,9 @@ Plugin 'leshill/vim-json'
 Plugin 'skammer/vim-css-color'
 Plugin 'hallison/vim-markdown'
 
+" Scala
+Plugin 'derekwyatt/vim-scala'
+
 " Plugin 'tpope/vim-haml'
 " Plugin 'kchmck/vim-coffee-script'
 " Plugin 'itspriddle/vim-jquery'
