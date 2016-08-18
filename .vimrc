@@ -51,8 +51,8 @@ Plugin 'fholgado/minibufexpl.vim'
 "Plugin 'mileszs/ack.vim'  
 Plugin 'rking/ag.vim'  "用Ag取代ack
 " 状态行
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'bling/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
 "用于快速切换括号/引号或者标签
 Plugin 'tpope/vim-surround'
 "在Vim 中对齐文本
@@ -319,40 +319,6 @@ let g:tagbar_autofocus = 1
 "-----------------------------------------------------------------
 let g:SuperTabRetainCompletionType="context" 
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
-
-
-" 设置vim-airline
-"-----------------------------------------------------------------
-" set status line
-set laststatus=2
-
-let g:airline_theme="molokai" 
-
-"这个是安装字体后 必须设置此项" 
-let g:airline_powerline_fonts = 1   
-
-" 打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
-" enable tabline
-let g:airline#extensions#tabline#enabled = 1
-" set left separator
-let g:airline#extensions#tabline#left_sep = ' '
-" set left separator which are not editting
-let g:airline#extensions#tabline#left_alt_sep = '|'
-" show buffer number
-let g:airline#extensions#tabline#buffer_nr_show = 1
-
-"设置切换Buffer快捷键"
-nnoremap <C-tab> :bn<CR>
-nnoremap <C-s-tab> :bp<CR>
-" 关闭状态显示空白符号计数
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#whitespace#symbol = '!'
-" 设置consolas字体"前面已经设置过
-"set guifont=Consolas\ for\ Powerline\ FixedD:h11
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
-
 
 " ZoomWin
 "-----------------------------------------------------------------
