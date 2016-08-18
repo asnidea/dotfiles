@@ -54,6 +54,12 @@ Plugin 'rking/ag.vim'  "用Ag取代ack
 " 状态行
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+" 需要powerline的fonts支持
+" $ mkdir .font/
+" $ cd .font/
+" $ git clone https://github.com/Lokaltog/powerline-fonts.git 
+" $ cd powerline-fonts/
+" $ ./install.sh
 "用于快速切换括号/引号或者标签
 Plugin 'tpope/vim-surround'
 "在Vim 中对齐文本
