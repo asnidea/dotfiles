@@ -91,6 +91,9 @@ Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 
+" True Sublime Text style multiple selections for Vim
+Plugin 'terryma/vim-multiple-cursors'
+
 "color
 Plugin 'flazz/vim-colorschemes'
 
@@ -101,7 +104,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'leshill/vim-json'
 Plugin 'skammer/vim-css-color'
-Plugin 'hallison/vim-markdown'
+Plugin 'tpope/vim-markdown'
 
 " Scala
 Plugin 'derekwyatt/vim-scala'
@@ -143,9 +146,9 @@ call vundle#end()            " 必须
 set fenc=utf-8
 set fencs=utf-8,gb18030,gbk,gb2312,cp936
 "设定编码
-set enc=utf-8
-" set fileencodings=utf-8,GB2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-set fileencodings=utf-8,GB2312,cp936,gb18030,big5,latin1
+set encoding=utf-8
+set fileencodings=utf-8,chinese,ucs-bom,gb18030,gbk,gb2312,cp936,big5,latin1
+
 
 " 设置开启语法高亮  
 syntax on  
@@ -382,3 +385,53 @@ set noequalalways
 " Ag
 "-----------------------------------------------------------------
 let g:ackprg = 'ag --nogroup --nocolor --column'
+
+
+" Scaladoc comment
+"-----------------------------------------------------------------
+let g:scala_scaladoc_indent = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+set diffexpr=MyDiff()
+" function MyDiff()
+" 	let opt = '-a --binary '
+" 	if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+" 	if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+" 	let arg1 = v:fname_in
+" 	if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+" 	let arg2 = v:fname_new
+" 	if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+" 	let arg3 = v:fname_out
+" 	if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+" 	let eq = ''
+" 	if $VIMRUNTIME =~ ' '
+" 		if &sh =~ '\<cmd'
+" 			let cmd = '""' . $VIMRUNTIME . '\diff"'
+" 			let eq = '"'
+" 		else
+" 			let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+" 		endif
+" 	else
+" 		let cmd = $VIMRUNTIME . '\diff'
+" 	endif
+" 	silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+" endfunction
+
