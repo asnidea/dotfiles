@@ -1,4 +1,4 @@
-
+"取消VI兼容
 set nocompatible               " be iMproved
 filetype off                   " required!
 
