@@ -1,3 +1,4 @@
+"取消VI兼容
 set nocompatible               " be iMproved
 filetype off                   " required!
 
@@ -94,7 +95,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'leshill/vim-json'
 Plugin 'skammer/vim-css-color'
-Plugin 'hallison/vim-markdown'
+Plugin 'tpope/vim-markdown'
 
 " Scala
 Plugin 'derekwyatt/vim-scala'
@@ -134,11 +135,11 @@ call vundle#end()            " 必须
 
 " 设置文件编码检测类型及支持格式
 set fenc=utf-8
-set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
-
+set fencs=utf-8,gb18030,gbk,gb2312,cp936
 "设定编码
-set enc=utf-8
-set fileencodings=utf-8,GB2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set encoding=utf-8
+set fileencodings=utf-8,chinese,ucs-bom,gb18030,gbk,gb2312,cp936,big5,latin1
+
 
 " 设置开启语法高亮  
 syntax on  
@@ -266,6 +267,13 @@ nmap <Leader>p "+p
 
 "与windows共享剪贴板
 set clipboard+=unnamed
+
+" 分屏窗口移动
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
 
 " 通过":W"命令来强制保存只读文件
 " command W :w !sudo tee %
