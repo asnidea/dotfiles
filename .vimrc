@@ -4,6 +4,15 @@ filetype off                   " required!
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  < 判断是终端还是 Gvim >
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("gui_running")
+    let g:isGUI = 1
+else
+    let g:isGUI = 0
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Vundle设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 设置包括vundle和初始化相关的runtime path
@@ -75,9 +84,10 @@ Plugin 'vim-scripts/ZoomWin'
 " git
 Plugin 'tpope/vim-fugitive'
 
+" UltiSnips
+Plugin 'SirVer/ultisnips'
 "snippet
 Plugin 'honza/vim-snippets'
-" Plugin 'gmarik/snipmate.vim'
 
 "taglist
 Plugin 'majutsushi/tagbar'
@@ -140,12 +150,16 @@ set fencs=utf-8,gb18030,gbk,gb2312,cp936
 set encoding=utf-8
 set fileencodings=utf-8,chinese,ucs-bom,gb18030,gbk,gb2312,cp936,big5,latin1
 
+" 文件格式，默认 ffs=dos,unix
+ffs=unix,dos,mac
 
 " 设置开启语法高亮  
 syntax on  
 
 "显示行号  
 set number
+"显示相对行号
+" set relativenumber
 
 " tab宽度  
 set tabstop=4  
@@ -226,30 +240,29 @@ set ruler
 "\ endif
 
 
-"高亮鼠标位置
-if has("gui_running")  
-"cursorline  highlight(高亮当前行)
-set cursorline               
-hi CursorLine guibg=#666666 
-hi CursorColumn guibg=#333333 
-"cursorcolumn highlight(高亮当前列)          
-"set cursorcolumn
-"highlight CursorLine cterm=none ctermbg=2 ctermfg=0
+"高亮鼠标位置 && 用浅色高亮当前行
+if (g:isGUI)  
+	"cursorline  highlight(高亮当前行)
+	set cursorline               
+	hi CursorLine guibg=#666666 
+	hi CursorColumn guibg=#333333 
+	"cursorcolumn highlight(高亮当前列)          
+	"set cursorcolumn
+	"highlight CursorLine cterm=none ctermbg=2 ctermfg=0
+
+	" 用浅色高亮当前行
+	autocmd InsertLeave * se nocul
+	autocmd InsertEnter * se cul
 endif 
 
-" 用浅色高亮当前行
-if has("gui_running")
-autocmd InsertLeave * se nocul
-autocmd InsertEnter * se cul
-set gfn=Ubuntu\ Mono\ 14
-set guifontwide=Ubuntu\ Mono\ 14
+" 字体设置 && Color schema
+if (g:isGUI) "如果在 GUI 环境下运行则设置下面语句 
+	set guifontwide=Ubuntu\ Mono\ 14
+	color molokai
+else
+	color desert
 endif
 
-" Default color scheme
-" color desert
-color molokai
-
-set guifontwide=Ubuntu\ Mono\ 14
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  按键设定                                    "
@@ -290,14 +303,16 @@ map <C-l> <C-W>l
 " K 到第一个节点                 J 到最后一个节点
 " u 打开上层目录                 m 显示文件系统菜单（添加、删除、移动操作）
 " r 递归刷新当前目录             R 递归刷新当前根目录
+let NERDTreeWinSize=35
 let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$''cscope\.', '\.o$', 'ctags$']
 let NERDTreeShowBookmarks = 1 
 let NERDChristmasTree = 1 
 let NERDTreeWinPos = "left" 
 
 " NERDTree插件的快捷键
-imap <silent> <F9> <esc>:NERDTreeToggle<CR>
-nmap <silent> <F9> :NERDTreeToggle<CR>
+" imap <silent> <F2> <esc>:NERDTreeToggle<CR>
+" nmap <silent> <F2> :NERDTreeToggle<CR>
+map <F2> :NERDTreeToggle<CR>
 
 " 用空格键来开关折叠
 set foldenable
@@ -329,14 +344,11 @@ set tags=tags;
 " Tagbar
 "-----------------------------------------------------------------
 " nnoremap <silent> <F7> :TagbarToggle<CR> 
-nmap <F8> :TagbarToggle<CR>
+nmap <F7> :TagbarToggle<CR>
+let g:tagbar_width=35
 " set focus to TagBar when opening it
 let g:tagbar_autofocus = 1
 
-" 设置SuperTab 
-"-----------------------------------------------------------------
-let g:SuperTabRetainCompletionType="context" 
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " ZoomWin
 "-----------------------------------------------------------------
@@ -349,3 +361,59 @@ set noequalalways
 " Ag
 "-----------------------------------------------------------------
 let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Ctrlp
+"-----------------------------------------------------------------
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif " MacOSX/Linux
+" set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+" 用AG替换Grep，搜索更快
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+
+"缩进指示线indentline
+"-----------------------------------------------------------------
+let g:indentLine_char='┆'
+let g:indentLine_enabled = 1
+
+"Change Character Color: GVim
+let g:indentLine_color_gui = '#A4E57E'
+
+" 语法检查syntastic
+"-----------------------------------------------------------------
+
+
+" 设置YouCompleteMe
+"-----------------------------------------------------------------
+
+
+" 设置UltiSnips
+"-----------------------------------------------------------------
+let g:UltiSnipsExpandTrigger = "<Tab>"
+" let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger = "<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" 设置SuperTab 
+"-----------------------------------------------------------------
+"let g:SuperTabRetainCompletionType="context" 
+"let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType    = '<C-n>'
+let g:SuperTabCrMapping                = 0
+
+" Scaladoc comment
+"-----------------------------------------------------------------
+let g:scala_scaladoc_indent = 1
+
+" Markdown
+"-----------------------------------------------------------------
+autocmd BufNewFile,BufRead *.{md,mkd,mkdn,mark*} set filetype=markdown
+
