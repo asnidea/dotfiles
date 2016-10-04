@@ -278,6 +278,10 @@ vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至vim
 nmap <Leader>p "+p
 
+" 快捷键粘贴映射到F3键 
+nmap <F3> "+p 
+imap <F3> <Esc>"+p 
+
 "与windows共享剪贴板
 set clipboard+=unnamed
 
@@ -290,6 +294,10 @@ map <C-l> <C-W>l
 
 " 通过":W"命令来强制保存只读文件
 " command W :w !sudo tee %
+
+" python 运行程序
+" au BufRead *.py map <buffer> <F5> :w<CR>:!/usr/bin/env python % <CR>
+au BufRead *.py map <buffer> <F5> :w<CR>:! python % <CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                插件设定                                    "
