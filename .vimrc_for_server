@@ -105,7 +105,6 @@ set ruler
 
 
 " Default color scheme
-set backgroud=dark
 color desert
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
