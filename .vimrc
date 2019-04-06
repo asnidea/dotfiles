@@ -1,143 +1,9 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Vim 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "取消VI兼容
-set nocompatible               " be iMproved
-filetype off                   " required!
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  < 判断是终端还是 Gvim >
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("gui_running")
-    let g:isGUI = 1
-else
-    let g:isGUI = 0
-endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                Vundle设定                                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 设置包括vundle和初始化相关的runtime path
-set rtp+=~/.vim/bundle/Vundle.vim
-
-" 插件必须在vundle#begin和vundle#end之间
-call vundle#begin()
-" 另一种选择, 指定一个vundle安装插件的路径
-"call vundle#begin('~/some/path/here')
-
-" 让vundle管理插件版本,必须
-Plugin 'VundleVim/Vundle.vim'
-
-" 以下范例用来支持不同格式的插件安装.
-" 请将安装插件的命令放在vundle#begin和vundle#end之间.
-" Github上的插件
-" 格式为 Plugin '用户名/插件仓库名'
-" Plugin 'tpope/vim-fugitive'
-" 来自 http://vim-scripts.org/vim/scripts.html 的插件
-" Plugin '插件名称' 实际上是 Plugin 'vim-scripts/插件仓库名' 只是此处的用户名可以省略
-" Plugin 'L9'
-" 由Git支持但不再github上的插件仓库 Plugin 'git clone 后面的地址'
-" Plugin 'git://git.wincent.com/command-t.git'
-" 本地的Git仓库(例如自己的插件) Plugin 'file:///+本地插件仓库绝对路径'
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" 插件在仓库的子目录中.
-" 正确指定路径用以设置runtimepath. 以下范例插件在sparkup/vim目录下
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" 安装L9，如果已经安装过这个插件，可利用以下格式避免命名冲突
-" Plugin 'ascenator/L9', {'name': 'newL9'}
-
-
-"不同文件类型采用不同缩进
-filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和文件类型相关脚本
-" 忽视插件改变缩进,可以使用以下替代:
-"filetype plugin on
-
-
-" Plugins 列表:
-
-" 补全
-Plugin 'ervandew/supertab'
-"文件跳转:  Ctrl + p 快捷键
-Plugin 'kien/ctrlp.vim'
-"文件跳转: ,,w or ,,b
-Plugin 'easymotion/vim-easymotion'
-" 切换缓冲区
-Plugin 'fholgado/minibufexpl.vim'
-" Ag：跨文件代码查找
-"Plugin 'mileszs/ack.vim'  
-Plugin 'rking/ag.vim'  "用Ag取代ack
-" 状态行
-" Plugin 'bling/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
-"用于快速切换括号/引号或者标签
-Plugin 'tpope/vim-surround'
-"在Vim 中对齐文本
-Plugin 'godlygeek/tabular'
-" 符号自动补全
-Plugin 'raimondi/delimitmate'
-" 缩进提示线
-Plugin 'yggdroot/indentline'
-" repeat.vim: enable repeating supported plugin maps with "."
-Plugin 'tpope/vim-repeat'
-
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'vim-scripts/ZoomWin'
-
-" git
-Plugin 'tpope/vim-fugitive'
-
-" UltiSnips
-Plugin 'SirVer/ultisnips'
-"snippet
-Plugin 'honza/vim-snippets'
-
-"taglist
-Plugin 'majutsushi/tagbar'
-"nerd
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-
-"color
-Plugin 'flazz/vim-colorschemes'
-
-" Langs
-" 神级插件，ZenCoding(原名)可以让你以一种神奇而无比爽快的感觉写HTML、CSS
-Plugin 'mattn/emmet-vim'
-
-Plugin 'pangloss/vim-javascript'
-Plugin 'leshill/vim-json'
-Plugin 'skammer/vim-css-color'
-Plugin 'tpope/vim-markdown'
-
-" Scala
-Plugin 'derekwyatt/vim-scala'
-
-" Plugin 'tpope/vim-haml'
-" Plugin 'kchmck/vim-coffee-script'
-" Plugin 'itspriddle/vim-jquery'
-" Plugin 'cakebaker/scss-syntax.vim'
-" Plugin 'mmalecki/vim-node.js'
-
-
-" ruby
-" Plugin 'vim-ruby/vim-ruby'
-" Plugin 'tpope/vim-rails.git'
-" Plugin 'taq/vim-rspec.git'
-
-" Plugin 'tomtom/tcomment_vim'
-
-
-" 你的所有插件需要在下面这行之前
-" Vundle#End
-call vundle#end()            " 必须
-
-"
-" 简要帮助文档
-" :PluginList       - 列出所有已配置的插件
-" :PluginInstall    - 安装插件,追加 `!` 用以更新或使用 :PluginUpdate
-" :PluginSearch foo - 搜索 foo ; 追加 `!` 清除本地缓存
-" :PluginClean      - 清除未使用插件,需要确认; 追加 `!` 自动批准移除未使用插件
-"
-" 查阅 :h vundle 获取更多细节和wiki以及FAQ
-" 将你自己对非插件片段放在这行之后
+set nocompatible
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  通用设定                                    "
@@ -151,7 +17,7 @@ set encoding=utf-8
 set fileencodings=utf-8,chinese,ucs-bom,gb18030,gbk,gb2312,cp936,big5,latin1
 
 " 文件格式，默认 ffs=dos,unix
-ffs=unix,dos,mac
+" ffs=unix,dos,mac
 
 " 设置开启语法高亮  
 syntax on  
@@ -207,8 +73,6 @@ set nospell
 set linebreak
 set showbreak=...
 
-
-
 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
 set report=0
 
@@ -217,11 +81,11 @@ set report=0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"" 状态行设置
-" " 总是显示状态行
-" set laststatus=2
-" " 我的状态行显示的内容（包括文件类型和解码）
-" set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
-" 
+" 总是显示状态行
+set laststatus=2
+" 我的状态行显示的内容（包括文件类型和解码）
+set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
+ 
 " ""我的状态行显示的内容（包括文件类型和解码）
 " "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 " ""状态栏设置:文件路径、文件名、标记、文件类型、字符编码、文件格式、当前位置、当前相对位置、文件总行数、日期、星期
@@ -256,13 +120,13 @@ if (g:isGUI)
 endif 
 
 " 字体设置 && Color schema
-if (g:isGUI) "如果在 GUI 环境下运行则设置下面语句 
-	set guifontwide=Ubuntu\ Mono\ 14
-	color molokai
-else
-	color desert
-endif
-
+" if (g:isGUI) 如果在 GUI 环境下运行则设置下面语句 
+	" set guifontwide=Ubuntu\ Mono\ 14
+	" color molokai
+" else
+	" color desert
+" endif
+color desert
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  按键设定                                    "
@@ -293,15 +157,123 @@ map <C-l> <C-W>l
 
 
 " 通过":W"命令来强制保存只读文件
-" command W :w !sudo tee %
+cmap W! w !sudo tee >/dev/null %
+cmap w!! w !sudo tee >/dev/null %
 
-" python 运行程序
-" au BufRead *.py map <buffer> <F5> :w<CR>:!/usr/bin/env python % <CR>
-au BufRead *.py map <buffer> <F5> :w<CR>:! python % <CR>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              Plugins 设定                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" 基于 vim-plug 来进行插件管理
+
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+" 补全
+Plug 'ervandew/supertab'
+" 文档代码搜索:  Ctrl + p 快捷键
+Plug 'kien/ctrlp.vim'
+" 文本快速跳转插件
+Plug 'easymotion/vim-easymotion'
+" Ag：跨文件代码查找
+Plug 'rking/ag.vim'  "用Ag取代ack
+" 状态行airline
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+"用于快速切换括号/引号或者标签
+Plug 'tpope/vim-surround'
+" repeat.vim: enable repeating supported plugin maps with "."
+Plug 'tpope/vim-repeat'
+" 快速选择
+Plug 'terryma/vim-expand-region'
+" Vim 中对齐文本
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+
+" markdown
+Plug 'plasticboy/vim-markdown'
+" markdown preview
+Plug 'iamcco/markdown-preview.vim'
+
+" 符号(括号，引号)自动补全
+Plug 'raimondi/delimitmate'
+" 缩进提示线
+Plug 'yggdroot/indentline'
+" 括号等匹配
+Plug 'jiangmiao/auto-pairs'
+
+"color
+Plug 'flazz/vim-colorschemes'
+
+" Vim 启动页面
+Plug 'mhinz/vim-startify'
+
+" git
+Plug 'tpope/vim-fugitive'
+
+"taglist
+" Plug 'majutsushi/tagbar'
+"nerd
+" Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+
+" True Sublime Text style multiple selections for Vim
+Plug 'terryma/vim-multiple-cursors'
+
+" 输入法切换(only mac)
+" Plug 'ybian/smartim'
+
+" 语法检查
+" syntastic 插件已经不推荐了 Plug 'scrooloose/syntastic'
+" ALE 代码语法异步检测插件
+" Plug 'w0rp/ale'
+
+" 切换缓冲区: 如果用airline，则取消这个插件
+" Plug 'fholgado/minibufexpl.vim'
+
+" Multiple Plug commands can be written in a single line using | separators
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" fzf
+" Plugin outside ~/.vim/plugged with post-update hook
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" If installed using Homebrew
+Plug '/usr/local/opt/fzf'
+" If installed using git
+" Plug '~/.fzf'
+Plug 'junegunn/fzf.vim'
+
+" Unmanaged plugin (manually installed and updated)
+"Plug '~/my-prototype-plugin'
+
+" Plug Commands
+" PlugInstall
+" PlugUpdate
+" PlugClean
+" PlugUpgrade
+" PlugStatus
+
+" Initialize plugin system
+call plug#end()
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                插件设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" vim-colorschemes
+"-----------------------------------------------------------------
+" colorscheme molokai
+colorscheme solarized
+
+
 " plugin - NERD_tree.vim 以树状方式浏览系统中的文件和目录
 "-----------------------------------------------------------------
 " :NERDtree 打开NERD_tree         :NERDtreeClose    关闭NERD_tree
@@ -339,32 +311,114 @@ let NERDCompactSexyComs=1   " 多行注释时样子更好看
 
 " Command-/ to toggle comments
 "-----------------------------------------------------------------
-map <C-/> <plug>NERDCommenterToggle<CR>
-imap <C-/> <Esc><plug>NERDCommenterToggle<CR>i
+" map <C-/> <plug>NERDCommenterToggle<CR>
+" imap <C-/> <Esc><plug>NERDCommenterToggle<CR>i
 
-
-" CTags
+" easymotion
 "-----------------------------------------------------------------
-map <F12> :!ctags <CR> <CR> :!cscope -Rbq<CR><CR>
-set tags=tags; 
-"这个分号是不可以缺省的
+"文件跳转: ,,w or ,,b
+"文件跳转: ,,w or ,,b
 
-" Tagbar
+" vim-surround
 "-----------------------------------------------------------------
-" nnoremap <silent> <F7> :TagbarToggle<CR> 
-nmap <F7> :TagbarToggle<CR>
-let g:tagbar_width=35
-" set focus to TagBar when opening it
-let g:tagbar_autofocus = 1
+" normal mode:
+" ds  - delete a surrounding - ds"
+" cs  - change a surrounding - cs"'
+" ys  - add a surrounding -  ysiw)
+" yS  - add a surrounding and place the surrounded text on a new line + indent it
+" yss - add a surrounding to the whole line - yss(
+" ySs - add a surrounding to the whole line, place it on a new line + indent it
+"
+" visual mode
+" s   - in visual mode, add a surrounding
+" S   - in visual mode, add a surrounding but place text on new line + indent 
+" visual 模式下的按键绑定
+" simple surround {{{
+vmap " S"
+vmap ' S'
+vmap ` S`
+vmap [ S[
+vmap ( S(
+vmap { S{
+vmap } S}
+vmap ] S]
+vmap ) S)
+" }}}
+" 此插件可以跟 repeat.vim 配合使用
 
-
-" ZoomWin
+" tabular
 "-----------------------------------------------------------------
-" Without setting this, ZoomWin restores windows in a way that causes
-" equalalways behavior to be triggered the next time CommandT is used.
-" This is likely a bludgeon to solve some other issue, but it works
-set noequalalways
+" 冒号对齐 ： :Tab /:
+" 逗号对齐 ： :Tab /,
+" //对齐   ： :Tab /\/\/
 
+" vim-easy-align
+"-----------------------------------------------------------------
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" vipga=  : vi + gp + '='
+" gaip=   : ga + ip + '='
+
+" character: <Space>, =, :, ., |, &, #, and ,.
+
+" vim-expand-region
+"-----------------------------------------------------------------
+" map K <Plug>(expand_region_expand)
+" map J <Plug>(expand_region_shrink)
+let g:expand_region_use_select_mode = 1
+
+" vim-multiple-cursors
+"-----------------------------------------------------------------
+let g:multi_cursor_start_key='<C-n>'
+let g:multi_cursor_start_word_key='g<C-n>'
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+" ale
+"-----------------------------------------------------------------
+" 参考 [Vim插件之al](https://www.cnblogs.com/awakenedy/articles/9110610.html)h
+" "始终开启标志列
+" let g:ale_sign_column_always = 1
+" let g:ale_set_highlights = 0
+" "自定义error和warning图标
+" let g:ale_sign_error = '✗'
+" let g:ale_sign_warning = '⚡'
+" "在vim自带的状态栏中整合ale
+" let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+" "显示Linter名称,出错或警告等相关信息
+" let g:ale_echo_msg_error_str = 'E'
+" let g:ale_echo_msg_warning_str = 'W'
+" let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" "普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+" nmap sp <Plug>(ale_previous_wrap)
+" nmap sn <Plug>(ale_next_wrap)
+" "<Leader>s触发/关闭语法检查
+" nmap <Leader>s :ALEToggle<CR>
+" "<Leader>d查看错误或警告的详细信息
+" nmap <Leader>d :ALEDetail<CR>
+" "文件内容发生变化时不进行检查
+" let g:ale_lint_on_text_changed = 'never'
+" "打开文件时不进行检查
+" let g:ale_lint_on_enter = 0
+
+" " CTags
+" "-----------------------------------------------------------------
+" map <F12> :!ctags <CR> <CR> :!cscope -Rbq<CR><CR>
+" set tags=tags;
+" "这个分号是不可以缺省的
+" 
+" " Tagbar
+" "-----------------------------------------------------------------
+" " nnoremap <silent> <F7> :TagbarToggle<CR>
+" nmap <F7> :TagbarToggle<CR>
+" let g:tagbar_width=35
+" " set focus to TagBar when opening it
+" let g:tagbar_autofocus = 1
 
 " Ag
 "-----------------------------------------------------------------
@@ -392,34 +446,25 @@ endif
 let g:indentLine_char='┆'
 let g:indentLine_enabled = 1
 
-"Change Character Color: GVim
-let g:indentLine_color_gui = '#A4E57E'
+" "Change Character Color: GVim
+" let g:indentLine_color_gui = '#A4E57E'
 
-" 语法检查syntastic
-"-----------------------------------------------------------------
-
-
-" 设置YouCompleteMe
-"-----------------------------------------------------------------
-
-
-" 设置UltiSnips
-"-----------------------------------------------------------------
-let g:UltiSnipsExpandTrigger = "<Tab>"
-" let g:UltiSnipsExpandTrigger = "<c-j>"
-let g:UltiSnipsJumpForwardTrigger = "<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" " 设置UltiSnips
+" "-----------------------------------------------------------------
+" let g:UltiSnipsExpandTrigger = "<Tab>"
+" " let g:UltiSnipsExpandTrigger = "<c-j>"
+" let g:UltiSnipsJumpForwardTrigger = "<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " 设置SuperTab 
 "-----------------------------------------------------------------
-"let g:SuperTabRetainCompletionType="context" 
-"let g:SuperTabContextDefaultCompletionType = "<c-n>"
-let g:SuperTabDefaultCompletionType    = '<C-n>'
-let g:SuperTabCrMapping                = 0
+let g:SuperTabRetainCompletionType="context"
+" let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" let g:SuperTabDefaultCompletionType    = '<C-n>'
 
 " Scaladoc comment
 "-----------------------------------------------------------------
-let g:scala_scaladoc_indent = 1
+"let g:scala_scaladoc_indent = 1
 
 " Markdown
 "-----------------------------------------------------------------
