@@ -270,8 +270,19 @@ call plug#end()
 
 " vim-colorschemes
 "-----------------------------------------------------------------
+" colorscheme wombat 
 " colorscheme molokai
+
+" solarized:
+" 终端中需要先额外配置以下内容
+"set t_Co=256
+" xshell 中使用 solarized 配色时候，需要把自身的配色方案先设置成 solarized_dark，另外修改 set t_Co=8
+" let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+
 colorscheme solarized
+set background=dark
+"set background=light
 
 
 " plugin - NERD_tree.vim 以树状方式浏览系统中的文件和目录
