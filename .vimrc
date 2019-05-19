@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                Vim 
+"                                Vim for Mac 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "取消VI兼容
@@ -16,16 +16,18 @@ set fencs=utf-8,gb18030,gbk,gb2312,cp936
 set encoding=utf-8
 set fileencodings=utf-8,chinese,ucs-bom,gb18030,gbk,gb2312,cp936,big5,latin1
 
-" 文件格式，默认 ffs=dos,unix
-" ffs=unix,dos,mac
 
 " 设置开启语法高亮  
 syntax on  
 
+" filetype
+filetype on
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
 "显示行号  
 set number
-"显示相对行号
-" set relativenumber
 
 " tab宽度  
 set tabstop=4  
@@ -53,7 +55,12 @@ set confirm
 set iskeyword+=_,$,@,%,#,-
 
 " vim 自身命令行模式智能补全
+" 根据 shell 模式不同采用以下两种方式。参考《Vim 实用技巧》技巧32 自动补全 Ex 命令 page 88
+" bash shell 自动补全
+"set wildmode=longest,list
+" zsh 自动补全
 set wildmenu
+set wildmode=full
 
 " 设定文件浏览器目录为当前目录  
 set bsdir=buffer 
@@ -81,10 +88,12 @@ set report=0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"" 状态行设置
+" 以下为未启动 vim-airline 插件的设置
+"
 " 总是显示状态行
-set laststatus=2
+" set laststatus=2
 " 我的状态行显示的内容（包括文件类型和解码）
-set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
+" set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
  
 " ""我的状态行显示的内容（包括文件类型和解码）
 " "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
@@ -92,41 +101,17 @@ set statusline=[%n]%<%f%y%h%m%r%=[%b\ 0x%B]\ %l\ of\ %L,%c%V\ Page\ %N\ %P
 " ""set statusline=%F\ %h%1*%m%r%w%0*[%{strlen(&filetype)?&filetype:'none'},%{&encoding},%{&fileformat}]%=%-14.(%l,%c%V%)\ %<%p%%\ \ \ [%L]\ \ \ "%{strftime('%y-%m-%d\ %A')} 
 " 
 
-
 " "在编辑过程中，在右下角显示光标位置的状态行
 set ruler   
 " set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
 
-" 打开文件时，总是跳到退出之前的光标处
-"autocmd BufReadPost *
-"\ if line("'\"") > 0 && line("'\"") <= line("$") |
-"\   exe "normal! g`\"" |
-"\ endif
+" guifont
+set guifont=Source\ Code\ Pro\ for\ Powerline:h16
 
-
-"高亮鼠标位置 && 用浅色高亮当前行
-if (g:isGUI)  
-	"cursorline  highlight(高亮当前行)
-	set cursorline               
-	hi CursorLine guibg=#666666 
-	hi CursorColumn guibg=#333333 
-	"cursorcolumn highlight(高亮当前列)          
-	"set cursorcolumn
-	"highlight CursorLine cterm=none ctermbg=2 ctermfg=0
-
-	" 用浅色高亮当前行
-	autocmd InsertLeave * se nocul
-	autocmd InsertEnter * se cul
-endif 
-
-" 字体设置 && Color schema
-" if (g:isGUI) 如果在 GUI 环境下运行则设置下面语句 
-	" set guifontwide=Ubuntu\ Mono\ 14
-	" color molokai
-" else
-	" color desert
-" endif
-color desert
+" Default color scheme
+" color desert
+"color solarized
+set background=dark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  按键设定                                    "
@@ -142,12 +127,6 @@ vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至vim
 nmap <Leader>p "+p
 
-" 快捷键粘贴映射到F3键 
-nmap <F3> "+p 
-imap <F3> <Esc>"+p 
-
-"与windows共享剪贴板
-set clipboard+=unnamed
 
 " 分屏窗口移动
 map <C-j> <C-W>j
@@ -174,15 +153,20 @@ call plug#begin('~/.vim/plugged')
 
 " 补全
 Plug 'ervandew/supertab'
+
+" 用 fzf + rg 取代 ctrlp + ag
 " 文档代码搜索:  Ctrl + p 快捷键
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
+" Ag：跨文件代码查找
+" Plug 'rking/ag.vim'  "用Ag取代ack
+
 " 文本快速跳转插件
 Plug 'easymotion/vim-easymotion'
-" Ag：跨文件代码查找
-Plug 'rking/ag.vim'  "用Ag取代ack
+" far: FIND AND REPLACE VIM PLUGIN
+Plug 'brooth/far.vim'
 " 状态行airline
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 "用于快速切换括号/引号或者标签
 Plug 'tpope/vim-surround'
 " repeat.vim: enable repeating supported plugin maps with "."
@@ -190,6 +174,7 @@ Plug 'tpope/vim-repeat'
 " 快速选择
 Plug 'terryma/vim-expand-region'
 " Vim 中对齐文本
+" Plug 'godlygeek/tabular'
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
@@ -202,7 +187,7 @@ Plug 'iamcco/markdown-preview.vim'
 Plug 'raimondi/delimitmate'
 " 缩进提示线
 Plug 'yggdroot/indentline'
-" 括号等匹配
+
 Plug 'jiangmiao/auto-pairs'
 
 "color
@@ -214,8 +199,13 @@ Plug 'mhinz/vim-startify'
 " git
 Plug 'tpope/vim-fugitive'
 
+" UltiSnips
+" Plug 'SirVer/ultisnips'
+"snippet
+Plug 'honza/vim-snippets'
+
 "taglist
-" Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 "nerd
 " Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
@@ -224,13 +214,16 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'terryma/vim-multiple-cursors'
 
 " 输入法切换(only mac)
-" Plug 'ybian/smartim'
+Plug 'ybian/smartim'
+
 
 " 语法检查
 " syntastic 插件已经不推荐了 Plug 'scrooloose/syntastic'
 " ALE 代码语法异步检测插件
 " Plug 'w0rp/ale'
 
+" vim 输入法切换
+"Plug 'lyokha/vim-xkbswitch'
 " 切换缓冲区: 如果用airline，则取消这个插件
 " Plug 'fholgado/minibufexpl.vim'
 
@@ -285,9 +278,9 @@ colorscheme solarized
 " r 递归刷新当前目录             R 递归刷新当前根目录
 let NERDTreeWinSize=35
 let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$''cscope\.', '\.o$', 'ctags$']
-let NERDTreeShowBookmarks = 1 
-let NERDChristmasTree = 1 
-let NERDTreeWinPos = "left" 
+let NERDTreeShowBookmarks = 1
+let NERDChristmasTree = 1
+let NERDTreeWinPos = "left"
 
 " NERDTree插件的快捷键
 " imap <silent> <F2> <esc>:NERDTreeToggle<CR>
@@ -311,8 +304,8 @@ let NERDCompactSexyComs=1   " 多行注释时样子更好看
 
 " Command-/ to toggle comments
 "-----------------------------------------------------------------
-" map <C-/> <plug>NERDCommenterToggle<CR>
-" imap <C-/> <Esc><plug>NERDCommenterToggle<CR>i
+map <C-/> <plug>NERDCommenterToggle<CR>
+imap <C-/> <Esc><plug>NERDCommenterToggle<CR>i
 
 " easymotion
 "-----------------------------------------------------------------
@@ -344,7 +337,7 @@ vmap } S}
 vmap ] S]
 vmap ) S)
 " }}}
-" 此插件可以跟 repeat.vim 配合使用
+" 此插件可以跟下面的 repeat.vim 配合使用
 
 " tabular
 "-----------------------------------------------------------------
@@ -420,43 +413,197 @@ let g:multi_cursor_quit_key='<Esc>'
 " " set focus to TagBar when opening it
 " let g:tagbar_autofocus = 1
 
-" Ag
-"-----------------------------------------------------------------
-let g:ackprg = 'ag --nogroup --nocolor --column'
 
-" Ctrlp
+" 设置vim-airline
 "-----------------------------------------------------------------
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif " MacOSX/Linux
-" set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+" set status line
+set laststatus=2
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-" 用AG替换Grep，搜索更快
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files.
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " Ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+" Theme
+"let g:airline_theme="wombat"
+let g:airline_theme="molokai"
+
+"这个是安装字体后 必须设置此项"
+let g:airline_powerline_fonts = 1
+
+" 打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
+" enable tabline
+let g:airline#extensions#tabline#enabled = 1
+" set left separator
+let g:airline#extensions#tabline#left_sep = ' '
+" set left separator which are not editting
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" show buffer number
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+"设置切换Buffer快捷键"
+" nnoremap <C-tab> :bn<CR>
+" nnoremap <C-s-tab> :bp<CR>
+" 关闭状态显示空白符号计数
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+" 设置consolas字体"前面已经设置过
+"set guifont=Consolas\ for\ Powerline\ FixedD:h11
+
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
 endif
 
 
+" Ag
+"-----------------------------------------------------------------
+" let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Ctrlp
+"-----------------------------------------------------------------
+" set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif " MacOSX/Linux
+" " set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+" let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+" " 用AG替换Grep，搜索更快
+" if executable('ag')
+  " " Use Ag over Grep
+  " set grepprg=ag\ --nogroup\ --nocolor
+  " " Use ag in CtrlP for listing files.
+  " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " " Ag is fast enough that CtrlP doesn't need to cache
+  " let g:ctrlp_use_caching = 0
+" endif
+
+
+" FZF
+"-----------------------------------------------------------------
+"
+" Command	List
+" Files [PATH]	普通文件查找 (similar to :FZF)
+" GFiles [OPTS]	git文件查找 (git ls-files)
+" GFiles?	git文件查找 (git status)
+" Buffers	buffer文件切换
+" Colors	Color schemes
+" Ag [PATTERN]	ag search result (ALT-A to select all, ALT-D to deselect all)
+" Lines [QUERY]	加载的所有buffer里查找
+" BLines [QUERY]	在当前buffer里查找包含某关键词的行
+" Tags [QUERY]	以Tag查找 (ctags -R)
+" BTags [QUERY]	Tags in the current buffer
+" Marks	Marks
+" Windows	Windows
+" Locate PATTERN	locate command output
+" History	v:oldfiles and open buffers
+" History:	命令历史查找
+" History/	Search history
+" Snippets	Snippets (UltiSnips)
+" Commits	Git commits (requires fugitive.vim)
+" BCommits	Git commits for the current buffer
+" Commands	Commands
+" Maps	Normal mode mappings
+" Helptags	Help tags 1
+" Filetypes	File types
+
+" 快捷键设置
+nmap <C-p> :Files<CR> "ctrp + p
+nnoremap <silent> <Leader>f :Files<CR>
+" nnoremap <silent> <Leader>b :Buffers<CR>
+" nmap <C-e> :Buffers<CR>
+" let g:fzf_action = { 'ctrl-e': 'edit' }
+
+" 参考[VIM与模糊搜索神器FZF的集成用法 - 从简单到高级 - 验证的进阶之路 - SegmentFault 思否](https://segmentfault.com/a/1190000016186540)
+" Command for git grep
+" - fzf#vim#grep(command, with_column, [options], [fullscreen])
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+
+" Override Colors command. You can safely do this in your .vimrc as fzf.vim
+" will not override existing commands.
+command! -bang Colors
+  \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
+
+" Augmenting Ag command using fzf#vim#with_preview function
+"   * fzf#vim#with_preview([[options], preview window, [toggle keys...]])
+"     * For syntax-highlighting, Ruby and any of the following tools are required:
+"       - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php
+"       - CodeRay: http://coderay.rubychan.de/
+"       - Rouge: https://github.com/jneen/rouge
+"
+"   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
+"   :Ag! - Start fzf in fullscreen and display the preview window above
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
+
+" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" Far
+"-----------------------------------------------------------------
+" 操作: 
+" :Far foo bar **/*.py
+" :Fardo
+
 "缩进指示线indentline
 "-----------------------------------------------------------------
-let g:indentLine_char='┆'
+" let g:indentLine_char='┆'
+let g:indentLine_char='¦'
 let g:indentLine_enabled = 1
+" Vim
+let g:indentLine_color_term = 239
 
-" "Change Character Color: GVim
-" let g:indentLine_color_gui = '#A4E57E'
+" GVim
+let g:indentLine_color_gui = '#A4E57E'
 
-" " 设置UltiSnips
-" "-----------------------------------------------------------------
-" let g:UltiSnipsExpandTrigger = "<Tab>"
-" " let g:UltiSnipsExpandTrigger = "<c-j>"
-" let g:UltiSnipsJumpForwardTrigger = "<c-b>"
+" none X terminal
+let g:indentLine_color_tty_light = 7 " (default: 4)
+let g:indentLine_color_dark = 1 " (default: 2)
+
+" Background (Vim, GVim)
+let g:indentLine_bgcolor_term = 202
+let g:indentLine_bgcolor_gui = '#FF5F00'
+
+" 语法检查syntastic
+"-----------------------------------------------------------------
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+
+" 设置UltiSnips
+"-----------------------------------------------------------------
+" 由于 UltiSnips 需要 python3 支持，而 MacVim 不支持，先停用 
+" " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" let g:UltiSnipsExpandTrigger="<tab>"
+" 冲突的时候选择这个  let g:UltiSnipsExpandTrigger = "<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" 设置SuperTab 
+" " If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsEditSplit="vertical"
+
+" " 在$USERPROFILE/.vim/UltiSnips目录下面建立自有的snippets
+" let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
+
+" " The default value for g:UltiSnipsJumpBackwardTrigger interferes with the
+" " built-in complete function: |i_CTRL-X_CTRL-K|. A workaround is to add the
+" " following to your vimrc file or switching to a plugin like Supertab or
+" " YouCompleteMe. >
+" inoremap <c-x><c-k> <c-x><c-k>
+
+" 设置SuperTab
 "-----------------------------------------------------------------
 let g:SuperTabRetainCompletionType="context"
 " let g:SuperTabContextDefaultCompletionType = "<c-n>"
@@ -469,4 +616,11 @@ let g:SuperTabRetainCompletionType="context"
 " Markdown
 "-----------------------------------------------------------------
 autocmd BufNewFile,BufRead *.{md,mkd,mkdn,mark*} set filetype=markdown
+
+
+" vim-xkbswitch: 自动切换输入法
+"-----------------------------------------------------------------
+" let g:XkbSwitchEnabled = 1
+" let g:XkbSwitchIMappings   = ['cn']
+" let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
 
