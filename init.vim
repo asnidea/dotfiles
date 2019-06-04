@@ -1,6 +1,10 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                Vim for Mac 
+"                               NeoVim for Mac 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"python ruby 支持
+let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
+let g:ruby_host_prog = '/Users/wsj/.rvm/rubies/ruby-2.5.3/bin/ruby'
 
 "取消VI兼容
 set nocompatible
@@ -112,6 +116,18 @@ set guifont=Source\ Code\ Pro\ for\ Powerline:h16
 " color desert
 set background=dark
 
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  按键设定                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -146,9 +162,11 @@ cmap w!! w !sudo tee >/dev/null %
 
 " 基于 vim-plug 来进行插件管理
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " Make sure you use single quotes
+
+" 部分插件参考： https://github.com/rafi/vim-config
 
 " 补全
 Plug 'ervandew/supertab'
@@ -216,10 +234,18 @@ Plug 'tpope/vim-fugitive'
 " UltiSnips
 " Plug 'SirVer/ultisnips'
 "snippet
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
+
+" Neovim: Dark powered asynchronous completion framework
+Plug 'Shougo/deoplete.nvim'
+" Snippets with integration to Deoplete
+Plug 'Shougo/neosnippet.vim' 
+" Standard snippets repository for neosnippet
+Plug 'Shougo/neosnippet-snippets'
 
 "taglist
 Plug 'majutsushi/tagbar'
+
 "nerd
 " Plug 'scrooloose/nerdtree'
 " NERDTree plugin for showing git status
@@ -617,16 +643,16 @@ let g:indentLine_enabled = 1
 " " Vim
 let g:indentLine_color_term = 239
 
-" GVim
-let g:indentLine_color_gui = '#A4E57E'
+" " GVim
+" let g:indentLine_color_gui = '#A4E57E'
 
-" none X terminal
-let g:indentLine_color_tty_light = 7 " (default: 4)
-let g:indentLine_color_dark = 1 " (default: 2)
+" " none X terminal
+" let g:indentLine_color_tty_light = 7 " (default: 4)
+" let g:indentLine_color_dark = 1 " (default: 2)
 
-" Background (Vim, GVim)
-let g:indentLine_bgcolor_term = 202
-let g:indentLine_bgcolor_gui = '#FF5F00'
+" " Background (Vim, GVim)
+" let g:indentLine_bgcolor_term = 202
+" let g:indentLine_bgcolor_gui = '#FF5F00'
 
 " 语法检查syntastic
 "-----------------------------------------------------------------
