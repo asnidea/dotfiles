@@ -106,11 +106,12 @@ set ruler
 " set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
 
 " guifont
-set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+" set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+" set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h16
+set guifont="Sauce Code Pro Nerd Font Complete:h14"
 
 " Default color scheme
 " color desert
-"color solarized
 set background=dark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -136,7 +137,7 @@ map <C-l> <C-W>l
 
 
 " 通过":W"命令来强制保存只读文件
-cmap W! w !sudo tee >/dev/null %
+" cmap W! w !sudo tee >/dev/null %
 cmap w!! w !sudo tee >/dev/null %
 
 
@@ -151,8 +152,8 @@ call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
 
-" 补全
-Plug 'ervandew/supertab'
+" 部分插件参考： https://github.com/rafi/vim-config
+
 
 " 用 fzf + rg 取代 ctrlp + ag
 " 文档代码搜索:  Ctrl + p 快捷键
@@ -160,14 +161,15 @@ Plug 'ervandew/supertab'
 " Ag：跨文件代码查找
 " Plug 'rking/ag.vim'  "用Ag取代ack
 
+
+" Editing
+" 补全
+Plug 'ervandew/supertab'
 " 文本快速跳转插件
 Plug 'easymotion/vim-easymotion'
 " far: FIND AND REPLACE VIM PLUGIN
 Plug 'brooth/far.vim'
-" 状态行airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-"用于快速切换括号/引号或者标签
+"用于快速切换括号/引号或者标签 (还有一种新的类似插件：https://github.com/machakann/vim-sandwich)
 Plug 'tpope/vim-surround'
 " repeat.vim: enable repeating supported plugin maps with "."
 Plug 'tpope/vim-repeat'
@@ -177,50 +179,110 @@ Plug 'terryma/vim-expand-region'
 " Plug 'godlygeek/tabular'
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-
-" markdown
-Plug 'plasticboy/vim-markdown'
-" markdown preview
-Plug 'iamcco/markdown-preview.vim'
-
+" 括号匹配
+Plug 'jiangmiao/auto-pairs'
+" 多级彩虹括号
+Plug 'kien/rainbow_parentheses.vim'
 " 符号(括号，引号)自动补全
 Plug 'raimondi/delimitmate'
+" True Sublime Text style multiple selections for Vim
+Plug 'terryma/vim-multiple-cursors'
+" Bookmarks, works independently from vim marks 
+Plug 'MattesGroeger/vim-bookmarks'
+
+" Displaying
+" 状态行airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 " 缩进提示线
 Plug 'yggdroot/indentline'
-
-Plug 'jiangmiao/auto-pairs'
-
-"color
-Plug 'flazz/vim-colorschemes'
 
 " Vim 启动页面
 Plug 'mhinz/vim-startify'
 
-" git
-Plug 'tpope/vim-fugitive'
-
-" UltiSnips
-" Plug 'SirVer/ultisnips'
-"snippet
-Plug 'honza/vim-snippets'
-
-"taglist
-Plug 'majutsushi/tagbar'
-"nerd
-" Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-
-" True Sublime Text style multiple selections for Vim
-Plug 'terryma/vim-multiple-cursors'
-
-" 输入法切换(only mac)
-Plug 'ybian/smartim'
+"color
+" 部分参考 https://blog.pabuisson.com/2018/06/favorite-color-schemes-modern-vim-neovim/
+Plug 'flazz/vim-colorschemes'
+" onedark 配色
+Plug 'joshdick/onedark.vim'
+" palenight
+Plug 'drewtempelmeyer/palenight.vim'
+" gruvbox
+Plug 'morhetz/gruvbox'
+" one 配色
+Plug 'rakr/vim-one'
+" 语法高亮 syntax highlighting for various languages
+Plug 'sheerun/vim-polyglot'
 
 
 " 语法检查
 " syntastic 插件已经不推荐了 Plug 'scrooloose/syntastic'
 " ALE 代码语法异步检测插件
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
+
+" git
+Plug 'tpope/vim-fugitive'
+" tagbar
+" Plug 'majutsushi/tagbar'
+" vista.vim
+Plug 'liuchengxu/vista.vim'
+"
+"nerd
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" NERDTree plugin for showing git status
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdcommenter'
+" defx: The dark powered file explorer implementation
+" if has('nvim')
+  " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+  " Plug 'Shougo/defx.nvim'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+
+" coc
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" upgrade
+" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install({'tag':1})}}
+"
+" UltiSnips
+" Plug 'SirVer/ultisnips'
+"vim-snippet
+Plug 'honza/vim-snippets'
+"
+" Neovim: Dark powered asynchronous completion framework
+" Plug 'Shougo/deoplete.nvim'
+" if has('nvim')
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+  " Plug 'Shougo/deoplete.nvim'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+" " Snippets with integration to Deoplete
+" Plug 'Shougo/neosnippet.vim' 
+" " Standard snippets repository for neosnippet
+" Plug 'Shougo/neosnippet-snippets'
+
+
+" python: need python3
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+" python text objects
+" Plug 'jeetsukumaran/vim-pythonsense'
+" markdown
+Plug 'plasticboy/vim-markdown'
+" markdown preview
+Plug 'iamcco/markdown-preview.vim'
+" Generate table of contents for Markdown files
+" Plug 'mzlogin/vim-markdown-toc'
+" go
+Plug 'fatih/vim-go'
+
+" 输入法切换(only mac)
+Plug 'ybian/smartim'
+
 
 " vim 输入法切换
 "Plug 'lyokha/vim-xkbswitch'
@@ -231,7 +293,6 @@ Plug 'ybian/smartim'
 "Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 "Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " fzf
@@ -263,19 +324,46 @@ call plug#end()
 
 " vim-colorschemes
 "-----------------------------------------------------------------
-" colorscheme wombat 
-" colorscheme molokai
+" solarized
+" g:solarized_term_italics=1
+" colorscheme solarized
+colorscheme solarized8_dark_high
+" colorscheme solarized8_dark_flat
+"
+" palenight
+" Italics for my favorite color scheme
+" let g:palenight_terminal_italics=1
+" colorscheme palenight
 
-" solarized:
-" 终端中需要先额外配置以下内容
-"set t_Co=256
-" xshell 中使用 solarized 配色时候，需要把自身的配色方案先设置成 solarized_dark，另外修改 set t_Co=8
-" let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-
-colorscheme solarized
-set background=dark
-"set background=light
+" gruvbox
+" let g:gruvbox_italic=1
+" colorscheme gruvbox
+"
+" one
+" https://github.com/rakr/vim-one
+" let g:airline_theme='one'
+" let g:one_allow_italics = 1 " I love italic for comments
+" colorscheme one
+"
+" onedark
+" https://github.com/joshdick/onedark.vim
+" Tmux
+ "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+" if (empty($TMUX))
+  " if (has("nvim"))
+    " "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  " endif
+  " "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  " "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  " if (has("termguicolors"))
+    " set termguicolors
+  " endif
+" endif
+" colorscheme onedark
 
 
 " plugin - NERD_tree.vim 以树状方式浏览系统中的文件和目录
@@ -385,44 +473,71 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " ale
 "-----------------------------------------------------------------
-" 参考 [Vim插件之al](https://www.cnblogs.com/awakenedy/articles/9110610.html)h
+" 参考 [Vim插件之ale](https://www.cnblogs.com/awakenedy/articles/9110610.html)
 " "始终开启标志列
-" let g:ale_sign_column_always = 1
-" let g:ale_set_highlights = 0
-" "自定义error和warning图标
-" let g:ale_sign_error = '✗'
-" let g:ale_sign_warning = '⚡'
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
+"自定义error和warning图标
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
 " "在vim自带的状态栏中整合ale
 " let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
-" "显示Linter名称,出错或警告等相关信息
-" let g:ale_echo_msg_error_str = 'E'
-" let g:ale_echo_msg_warning_str = 'W'
-" let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-" "普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
-" nmap sp <Plug>(ale_previous_wrap)
-" nmap sn <Plug>(ale_next_wrap)
-" "<Leader>s触发/关闭语法检查
-" nmap <Leader>s :ALEToggle<CR>
-" "<Leader>d查看错误或警告的详细信息
-" nmap <Leader>d :ALEDetail<CR>
-" "文件内容发生变化时不进行检查
-" let g:ale_lint_on_text_changed = 'never'
-" "打开文件时不进行检查
-" let g:ale_lint_on_enter = 0
+"显示Linter名称,出错或警告等相关信息
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap sp <Plug>(ale_previous_wrap)
+nmap sn <Plug>(ale_next_wrap)
+"<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
+"文件内容发生变化时不进行检查
+let g:ale_lint_on_text_changed = 'never'
+"打开文件时不进行检查
+let g:ale_lint_on_enter = 0
+"语法检查工具，例如对python使用pylint进行语法检查
+let g:ale_linters = {
+\   'python': ['flake8', 'pylint'],
+\   'javascript': ['eslint'],
+\   'go': ['golint'],
+\}
 
-" " CTags
-" "-----------------------------------------------------------------
+let g:ale_fixers = {
+\ 'python': ['add_blank_lines_for_python_control_statements','autopep8','isort','yapf','remove_trailing_lines','trim_whitespace'],
+\}
+
+" 保存的时候进行修正
+let g:ale_fix_on_save = 1
+
+autocmd FileType python noremap <buffer> <F7> :ALEFix<CR>
+
+" CTags
+"-----------------------------------------------------------------
 " map <F12> :!ctags <CR> <CR> :!cscope -Rbq<CR><CR>
 " set tags=tags;
 " "这个分号是不可以缺省的
 " 
-" " Tagbar
-" "-----------------------------------------------------------------
-" " nnoremap <silent> <F7> :TagbarToggle<CR>
-" nmap <F7> :TagbarToggle<CR>
+" Tagbar
+"-----------------------------------------------------------------
+" nnoremap <silent> <F3> :TagbarToggle<CR>
+nmap <F3> :TagbarToggle<CR>
 " let g:tagbar_width=35
-" " set focus to TagBar when opening it
-" let g:tagbar_autofocus = 1
+" set focus to TagBar when opening it
+let g:tagbar_autofocus = 1
+
+" Vista
+"-----------------------------------------------------------------
+nmap <F4> :Vista!!<CR>
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+" Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
+let g:vista#renderer#enable_icon = 1
+" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
+let g:vista#renderer#icons = {
+\   "function": "\uf794",
+\   "variable": "\uf71b",
+\  }
 
 
 " 设置vim-airline
@@ -431,8 +546,9 @@ let g:multi_cursor_quit_key='<Esc>'
 set laststatus=2
 
 " Theme
-"let g:airline_theme="wombat"
-let g:airline_theme="molokai"
+let g:airline_theme="wombat"
+" let g:airline_theme="molokai"
+" let g:airline_theme='onedark'
 
 "这个是安装字体后 必须设置此项"
 let g:airline_powerline_fonts = 1
@@ -450,6 +566,8 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 "设置切换Buffer快捷键"
 " nnoremap <C-tab> :bn<CR>
 " nnoremap <C-s-tab> :bp<CR>
+nnoremap [b :bp<CR>
+nnoremap ]b :bn<CR>
 " 关闭状态显示空白符号计数
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#whitespace#symbol = '!'
@@ -565,22 +683,23 @@ command! -bang -nargs=? -complete=dir Files
 
 "缩进指示线indentline
 "-----------------------------------------------------------------
-" let g:indentLine_char='┆'
-let g:indentLine_char='¦'
+let g:indentLine_char='┆'
+" let g:indentLine_char='¦'
 let g:indentLine_enabled = 1
-" Vim
+"
+" " Vim
 let g:indentLine_color_term = 239
 
-" GVim
-let g:indentLine_color_gui = '#A4E57E'
+" " GVim
+" let g:indentLine_color_gui = '#A4E57E'
 
-" none X terminal
-let g:indentLine_color_tty_light = 7 " (default: 4)
-let g:indentLine_color_dark = 1 " (default: 2)
+" " none X terminal
+" let g:indentLine_color_tty_light = 7 " (default: 4)
+" let g:indentLine_color_dark = 1 " (default: 2)
 
-" Background (Vim, GVim)
-let g:indentLine_bgcolor_term = 202
-let g:indentLine_bgcolor_gui = '#FF5F00'
+" " Background (Vim, GVim)
+" let g:indentLine_bgcolor_term = 202
+" let g:indentLine_bgcolor_gui = '#FF5F00'
 
 " 语法检查syntastic
 "-----------------------------------------------------------------
@@ -628,10 +747,69 @@ let g:SuperTabRetainCompletionType="context"
 "-----------------------------------------------------------------
 autocmd BufNewFile,BufRead *.{md,mkd,mkdn,mark*} set filetype=markdown
 
+" Deoplete
+"-----------------------------------------------------------------
+let g:deoplete#enable_at_startup = 1
 
 " vim-xkbswitch: 自动切换输入法
 "-----------------------------------------------------------------
 " let g:XkbSwitchEnabled = 1
 " let g:XkbSwitchIMappings   = ['cn']
 " let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
+
+
+" vim-bookmarks: https://github.com/MattesGroeger/vim-bookmarks
+"-----------------------------------------------------------------
+" | Action                                        | Shortcut   | Command                     " |
+" | --------------------------------------------- | ---------- | --------------------------- " |
+" | Add/remove bookmark at current line           | mm         | :BookmarkToggle             " |
+" | Add/edit/remove annotation at current line    | mi         | :BookmarkAnnotate <TEXT>    " |
+" | Jump to next bookmark in buffer               | mn         | :BookmarkNext               " |
+" | Jump to previous bookmark in buffer           | mp         | :BookmarkPrev               " |
+" | Show all bookmarks (toggle)                   | ma         | :BookmarkShowAll            " |
+" | Clear bookmarks in current buffer only        | mc         | :BookmarkClear              " |
+" | Clear bookmarks in all buffers                | mx         | :BookmarkClearAll           " |
+" | Move up bookmark at current line              | [count]mkk | :BookmarkMoveUp [<COUNT>]   " |
+" | Move down bookmark at current line            | [count]mjj | :BookmarkMoveDown [<COUNT>] " |
+" | Move bookmark at current line to another line | [count]mg  | :BookmarkMoveToLine <LINE>  " |
+" | Save all bookmarks to a file                  |            | :BookmarkSave <FILE_PATH>   " |
+" | Load bookmarks from a file                    |            | :BookmarkLoad <FILE_PATH>   " |
+
+" coc
+"-----------------------------------------------------------------
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+"
+" " Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+"
+"" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+"
+"" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)"
+"
+" Tab
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+	  let col = col('.') - 1
+	    return !col || getline('.')[col - 1]  =~# '\s'
+	endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
+                                           \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" python mode
+"-----------------------------------------------------------------
+let g:pymode_python = 'python3'
 
