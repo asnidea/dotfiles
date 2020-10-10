@@ -30,9 +30,11 @@ zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions', defer:2
 zplug 'zsh-users/zsh-history-substring-search'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+zplug 'supercrabtree/k'
 
 # theme
 # zplug 'romkatv/powerlevel10k', use:powerlevel10k.zsh-theme
+zplug "romkatv/powerlevel10k", as:theme
 
 # plugins
 # # Supports oh-my-zsh plugins and the like
@@ -48,8 +50,8 @@ zplug 'zsh-users/zsh-syntax-highlighting', defer:2
 # fi
 
 zplug "plugins/osx",      from:oh-my-zsh
-zplug "plugins/brew",     from:oh-my-zsh, if:"which brew"
-zplug "plugins/brew-cask",     from:oh-my-zsh, if:"which brew"
+# zplug "plugins/brew",     from:oh-my-zsh, if:"which brew"
+# zplug "plugins/brew-cask",     from:oh-my-zsh, if:"which brew"
 
 zplug 'plugins/git', from:oh-my-zsh
 zplug "plugins/sudo", from:oh-my-zsh
@@ -106,7 +108,7 @@ zplug load
 POWERLEVEL9K_MODE='nerdfont-complete'
 # POWERLEVEL9K_MODE='Sauce Code Pro Nerd Font Complete'
 # powerlevel10k: 比POWERLEVEL9K效率更高，配置可以采用原 powerlevel9k 的配置
-ZSH_THEME=powerlevel10k/powerlevel10k
+# ZSH_THEME=powerlevel10k/powerlevel10k
 # powerlevel9k
 # ZSH_THEME="powerlevel9k/powerlevel9k"
 
@@ -212,20 +214,19 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+# =============================================================================
+#                                   Aliases
+# =============================================================================
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
 
-
-# =============================================================================
-#                                   Aliases
-# =============================================================================
-
 # Example aliases
 # zsh 设置
-alias zshconfig="vim ~/.zshrc"
+# alias zshconfig="vim ~/.zshrc"
+alias zshconfig="nvim ~/.zshrc"
 alias zshreload="source ~/.zshrc"
 # vim 设置
 alias vimconfig="vim ~/.vimrc"
@@ -234,6 +235,15 @@ alias vimreload="source ~/.vimrc"
 alias nvi="nvim "
 alias nv="nvim "
 alias nviconfig="nvim ~/.config/nvim/init.vim"
+# ls -> exa
+alias l='exa -la'
+alias ll='exa -l --header'
+alias llg='exa -la --header --git'
+alias ls='colorls -l -A'
+alias la='colorls -a'
+alias lc='colorls -lA --sd'
+# jq
+alias jqc='jq --color-output . '
 # rm 替换
 # trash_path='~/.trash'
 # mkdir .trash
@@ -248,11 +258,18 @@ alias sha='shasum -a 256 '
 # 启动 python webserver
 alias www='python -m http.server 8000'
 # 外网 ip
-alias wanip='curl ipinfo.io/ip'
+# alias wanip='curl ipinfo.io/ip'
+# alias wanip='curl curlmyip.net'
+alias wanip='curl -4 -s https://api.myip.la'
+alias wanipinfo='curl -s -4 https://api.myip.la/cn?json'
+alias ipinfo='curl cip.cc'
+alias myip='curl -4 ip.sb'
 # 内网 ip
 alias lanip='ipconfig getifaddr en0'
 # ping 5次
 alias ping5='ping -c 5'
+# Ping -> Prettyping
+alias pping='prettyping '
 # wget
 alias wget='wget -c '
 # ps query
@@ -260,21 +277,35 @@ alias 'ps?'='ps ax | grep '
 # jupter lab
 alias lab='jupyter lab'
 # vim fzf
-# alias vfzf="vim $(fzf)"
+# alias vfzf="nvim $(fzf)"
 #cd fzf
 # alias dfzf="cd $(find * -type d | fzf)"
+# fd dir
+alias fdd='fd -t d '
 # vscode atom subl3
 # alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 #alias atom='/Applications/Atom.app/Contents/MacOS/Atom'
 #alias subl='/Applications/SublimeText.app/Contents/SharedSupport/bin/subl'
 
-alias diff="diff --color=auto"
+alias diff="colordiff"
 # alias tmux="tmux -u"
-alias tmuxm="tmux new-session \; split-window -h \; split-window -v \; attach"
+# alias tmuxm="tmux new-session \; split-window -h \; split-window -v \; attach"
 alias cp="cp -iv"
 alias mv="mv -iv"
 # alias rm="rm -irv"
 alias q="exit"
+
+# thefuck: 给thefuck取别名fuck
+# alias f="eval $(thefuck --alias)"
+# eval $(thefuck --alias)
+eval $(thefuck --alias)
+alias fk="fuck"
+
+# git clone alias
+alias gc="git clone"
+alias vgc="vip git clone"
+
+setopt no_nomatch
 
 # incr 
 source ~/.oh-my-zsh/custom/plugins/incr/incr*.zsh
@@ -282,8 +313,6 @@ source ~/.oh-my-zsh/custom/plugins/incr/incr*.zsh
 #source /~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # zsh-autosuggestions
 # source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-# zsh-autosuggestions 的快捷键设置
-bindkey ',' autosuggest-accept
 # zsh-interactive-de
 # source ~/.fzf/shell/zsh-interactive-cd.plugin.zsh
 
@@ -306,7 +335,7 @@ alias tt='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a b
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # autojump
-#[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # bash
 source ~/.bash_profile
@@ -328,24 +357,14 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bott
 # vscode
 # export PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-# standford nlp
-export CORENLP_HOME="$HOME/lib/stanford-corenlp-full-2018-10-06"
-
-# hadoop
-# hadoop-3.1.2
-# export HADOOP_HOME=$HOME/lib/hadoop-3.1.2
-# hadoop-2.7.7
-export HADOOP_HOME=$HOME/lib/hadoop-2.7.7
-export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
-export HADOOP_OPTS="-Djava.library.path=${HADOOP_HOME}/lib:${HADOOP_COMMON_LIB_NATIVE_DIR}"
-
-export PATH="$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin"
-
 
 # =============================================================================
 #                                Key Bindings
 # =============================================================================
 #
+# zsh-autosuggestions 的快捷键设置
+bindkey ',' autosuggest-accept
+
 # # Common CTRL bindings.
 # bindkey "^a" beginning-of-line
 # bindkey "^e" end-of-line
