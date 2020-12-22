@@ -58,6 +58,7 @@ set iskeyword+=_,$,@,%,#,-
 
 " vim 自身命令行模式智能补全
 set wildmenu
+set wildmode=full
 
 " 设定文件浏览器目录为当前目录  
 set bsdir=buffer 
@@ -132,3 +133,14 @@ map <C-l> <C-W>l
 " 通过":W"命令来强制保存只读文件
 " command W :w !sudo tee %
 " cmap w!! w !sudo tee >/dev/null %
+
+" 定义跳出括号函数，用于跳出括号
+func SkipPair()
+    if getline('.')[col('.') - 1] == ')' || getline('.')[col('.') - 1] == ']' || getline('.')[col('.') - 1] == '"' || getline('.')[col('.') - 1] == "'" || getline('.')[col('.') - 1] == '}'
+        return "\<ESC>la"
+    else
+        return "\t"
+    endif
+endfunc
+" 将tab键绑定为跳出括号
+inoremap <TAB> <c-r>=SkipPair()<CR>
